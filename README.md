@@ -1,6 +1,6 @@
 # Blog
 
-Personal blog built with [Hugo](https://gohugo.io) using the [Terminal](https://github.com/panr/hugo-theme-terminal) theme (embedded).
+Personal blog built with [Hugo](https://gohugo.io)
 
 ## Commands
 

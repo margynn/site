@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://martin-snclr.github.io/'
 pagination.pagerSize = 5
 defaultContentLanguage = 'en'
 defaultContentLanguageInSubdir = false
