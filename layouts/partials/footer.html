@@ -1,0 +1,36 @@
+<footer class="footer">
+  <!-- <div class="footer__inner">
+    {{ if $.Site.Copyright }}
+      <div class="copyright copyright--user">
+        <span>{{ $.Site.Copyright | safeHTML }}</span>
+    {{ else }}
+      <div class="copyright">
+        <span>© {{ now.Year }} Powered by <a href="https://gohugo.io">Hugo</a></span>
+    {{ end }}
+      <span>:: <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+  </div> -->
+</footer>
+
+{{ $cp := resources.Get "js/code.js" | js.Build }}
+{{ $comp := resources.Get "js/components.js" | js.Build }}
+{{ $theme := resources.Get "js/theme.js" | js.Build }}
+{{ $bundle := slice $cp $comp $theme | resources.Concat "bundle.js" | resources.Minify }}
+
+<script type="text/javascript" src="{{ $bundle.RelPermalink }}"></script>
+
+{{ if .Page.Store.Get "hasMermaid" }}
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+</script>
+{{ end }}
+
+{{ if .Page.Store.Get "hasKatex" }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, { delimiters: [{ left: '$$', right: '$$', display: true }] })">
+</script>
+{{ end }}
+

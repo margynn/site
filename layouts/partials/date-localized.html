@@ -1,0 +1,12 @@
+{{- $months := dict
+  "01" (i18n "monthJan") "02" (i18n "monthFeb") "03" (i18n "monthMar")
+  "04" (i18n "monthApr") "05" (i18n "monthMay") "06" (i18n "monthJun")
+  "07" (i18n "monthJul") "08" (i18n "monthAug") "09" (i18n "monthSep")
+  "10" (i18n "monthOct") "11" (i18n "monthNov") "12" (i18n "monthDec")
+-}}
+{{- $m := index $months (.Date.Format "01") -}}
+{{- if eq .Lang "fr" -}}
+  {{- .Date.Format "02" }} {{ $m }} {{ .Date.Format "2006" -}}
+{{- else -}}
+  {{- $m }} {{ .Date.Format "02, 2006" -}}
+{{- end -}}

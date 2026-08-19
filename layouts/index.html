@@ -1,0 +1,36 @@
+{{ define "main" }}
+<div class="home">
+  <div class="home-intro">
+{{ with .Content }}
+      <div class="about-card__bio">{{ . }}</div>
+    {{ end }}
+  </div>
+
+  {{ $sections := slice "articles" "thoughts" "bookmarks" "reading" }}
+  {{ $recent := first 15 ((where site.RegularPages "Section" "in" $sections).ByDate.Reverse) }}
+  {{ $labels := dict "articles" (i18n "feedArticles") "thoughts" (i18n "feedThoughts") "bookmarks" (i18n "feedBookmarks") "reading" (i18n "feedReading") }}
+  {{ if $recent }}
+  <div class="home-feed">
+    {{ range $recent }}
+    {{ $label := index $labels .Section | default .Section }}
+    <div class="home-feed__item">
+      <time class="home-feed__date">{{ .Date.Format "2006-01-02" }}</time>
+      <span class="home-feed__type">[{{ $label }}]</span>
+      {{ $noSingle := in (slice "bookmarks") .Section }}
+      {{ if .Title }}
+        {{ if and $noSingle .Params.link }}
+          <a class="home-feed__title" href="{{ .Params.link }}" target="_blank" rel="noopener">{{ .Title }}</a>
+        {{ else if $noSingle }}
+          <span class="home-feed__title">{{ .Title }}</span>
+        {{ else }}
+          <a class="home-feed__title" href="{{ .Permalink }}">{{ .Title }}</a>
+        {{ end }}
+      {{ else }}
+        <a class="home-feed__title home-feed__title--untitled" href="{{ .Permalink }}">{{ .Summary | plainify | truncate 60 "…" }}</a>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+  {{ end }}
+</div>
+{{ end }}

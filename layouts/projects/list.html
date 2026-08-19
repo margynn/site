@@ -1,0 +1,31 @@
+{{ define "main" }}
+<div class="projects">
+  {{ with .Content }}
+    <div class="index-content">{{ . }}</div>
+  {{ end }}
+
+  <div class="projects-grid">
+    {{ range .Pages }}
+      <div class="project-card">
+        <h2 class="project-card__title">
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </h2>
+        {{ if .Description }}
+          <p class="project-card__description">{{ .Description | markdownify }}</p>
+        {{ end }}
+        <div class="project-card__links">
+          {{ with .Params.github }}
+            <a href="{{ . }}" target="_blank" rel="noopener">GitHub</a>
+          {{ end }}
+          {{ with .Params.website }}
+            <a href="{{ . }}" target="_blank" rel="noopener">Website</a>
+          {{ end }}
+          {{ with .Params.status }}
+            <span class="project-card__status">{{ . }}</span>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,7 @@
+{{ with .Params.tags }}
+<div class="tag-list">
+  {{ range . }}
+  <a class="tag-pill" href="{{ relLangURL (printf "tags/%s/" (. | urlize)) }}">{{ . }}</a>
+  {{ end }}
+</div>
+{{ end }}

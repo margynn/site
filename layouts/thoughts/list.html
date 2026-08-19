@@ -1,0 +1,26 @@
+{{ define "main" }}
+<div class="thoughts">
+  {{ with .Content }}<div class="index-content">{{ . }}</div>{{ end }}
+
+  <div class="thought-stream">
+    {{ range .Pages }}
+    <article class="thought">
+      <a class="thought__date" href="{{ .Permalink }}" datetime="{{ .Date.Format "2006-01-02" }}">
+        {{ .Date.Format "2006-01-02" }}
+      </a>
+      <div class="thought__content">
+        {{ if .Params.showFullContent }}
+          {{ .Content }}
+        {{ else }}
+          {{ .Summary }}
+          {{ if .Truncated }}
+            <a class="button inline" href="{{ .Permalink }}">[{{ i18n "readMore" }}]</a>
+          {{ end }}
+        {{ end }}
+        {{ partial "tags.html" . }}
+      </div>
+    </article>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

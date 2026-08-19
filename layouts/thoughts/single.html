@@ -1,0 +1,8 @@
+{{ define "main" }}
+<article class="post thought-single">
+  <div class="post-meta">
+    <time class="post-date">{{ partial "date-localized.html" . }}</time>
+  </div>
+  <div class="post-content">{{ .Content }}</div>
+</article>
+{{ end }}

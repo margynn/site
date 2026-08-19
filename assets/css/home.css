@@ -1,0 +1,33 @@
+.home-intro { margin: 2rem 0; }
+
+.about-card__bio > *:first-child { margin-top: 0; }
+.about-card__bio > *:last-child  { margin-bottom: 0; }
+
+.home-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.home-feed__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.5rem;
+}
+
+.home-feed__date,
+.home-feed__type {
+  font-size: calc(var(--font-size) * 0.8);
+  color: color-mix(in srgb, var(--foreground) 40%, transparent);
+  white-space: nowrap;
+}
+
+.home-feed__title { color: var(--foreground); text-decoration: none; }
+.home-feed__title:hover { color: var(--accent); }
+
+.home-feed__title--untitled {
+  color: color-mix(in srgb, var(--foreground) 55%, transparent);
+  font-style: italic;
+}

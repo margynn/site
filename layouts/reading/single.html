@@ -1,0 +1,24 @@
+{{ define "main" }}
+{{ $statusLabels := dict
+  "reading"      (i18n "readingStatusReading")
+  "read"         (i18n "readingStatusRead")
+  "want-to-read" (i18n "readingStatusWantToRead")
+  "dropped"      (i18n "readingStatusDropped")
+}}
+<article class="post reading-single">
+  <h1 class="post-title">{{ .Title | markdownify }}</h1>
+
+  <div class="reading-meta">
+    {{ with .Params.author }}<span class="reading-meta__author">{{ . }}</span>{{ end }}
+    {{ with .Params.status }}<span class="reading-status reading-status--{{ . }}">{{ index $statusLabels . | default . }}</span>{{ end }}
+    {{ with .Params.started }}<span class="reading-meta__dates">{{ . }}{{ with $.Params.finished }} → {{ . }}{{ end }}</span>{{ end }}
+  </div>
+  {{ partial "tags.html" . }}
+
+  {{ with .Description }}<p class="reading-description">{{ . }}</p>{{ end }}
+
+  <div class="post-content">
+    {{ with .Content }}<div>{{ . }}</div>{{ end }}
+  </div>
+</article>
+{{ end }}

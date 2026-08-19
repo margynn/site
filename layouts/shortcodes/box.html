@@ -1,0 +1,5 @@
+{{ $title := .Get "title" }}
+<div class="box">
+  {{ with $title }}<div class="box__title">{{ . }}</div>{{ end }}
+  <div class="box__content">{{ .Inner | markdownify }}</div>
+</div>

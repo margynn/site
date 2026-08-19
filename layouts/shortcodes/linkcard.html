@@ -1,0 +1,11 @@
+{{ $url := .Get "url" }}
+{{ $title := .Get "title" | default $url }}
+{{ $description := .Get "description" }}
+<a class="linkcard" href="{{ $url }}" target="_blank" rel="noopener">
+  <div class="linkcard__body">
+    <div class="linkcard__title">{{ $title }}</div>
+    {{ with $description }}<div class="linkcard__description">{{ . }}</div>{{ end }}
+    <div class="linkcard__url">{{ $url }}</div>
+  </div>
+  <div class="linkcard__arrow">→</div>
+</a>

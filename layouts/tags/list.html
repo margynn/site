@@ -1,0 +1,19 @@
+{{ define "main" }}
+<div class="terms">
+  <h1>{{ .Title }}</h1>
+  {{ with .Content }}<div class="index-content">{{ . }}</div>{{ end }}
+  <ul class="tag-terms-list">
+    {{ $type := .Type }}
+    {{ range $key, $value := .Data.Terms.Alphabetical }}
+    {{ $name := .Name }}
+    {{ $count := .Count }}
+    {{ with $.Site.GetPage (printf "/%s/%s" $type $name) }}
+    <li class="tag-terms-item">
+      <a class="tag-pill" href="{{ .Permalink }}">{{ .Name }}</a>
+      <span class="tag-terms-count">[{{ $count }}]</span>
+    </li>
+    {{ end }}
+    {{ end }}
+  </ul>
+</div>
+{{ end }}

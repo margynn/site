@@ -1,0 +1,21 @@
+<header class="header">
+  <div class="header__inner">
+    <a href="{{ if $.Site.Params.Logo.LogoHomeLink }}{{ $.Site.Params.Logo.LogoHomeLink }}{{ else }}{{ $.Site.BaseURL }}{{ end }}">
+      <div class="logo">{{ with $.Site.Params.Logo.logoText }}{{ . }}{{ else }}Terminal{{ end }}</div>
+    </a>
+    {{ if len $.Site.Menus }}
+    <nav class="header__nav">
+      {{ range $.Site.Menus.main }}
+        {{ $active := eq $.Page.Section .Identifier }}
+        <a class="header__nav-link{{ if $active }} header__nav-link--active{{ end }}" href="{{ .URL }}">{{ .Name }}</a>
+      {{ end }}
+    </nav>
+    {{ end }}
+    <div class="header__right">
+      {{ if and $.Site.Params.showLanguageSelector (len $.Site.Home.AllTranslations) }}
+        {{ partial "language-menu.html" . }}
+      {{ end }}
+      {{ partial "theme-switcher.html" . }}
+    </div>
+  </div>
+</header>

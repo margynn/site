@@ -1,0 +1,29 @@
+{{ define "main" }}
+<div class="reading-list">
+  {{ with .Content }}<div class="index-content">{{ . }}</div>{{ end }}
+
+  {{ $statusLabels := dict
+    "reading"      (i18n "readingStatusReading")
+    "read"         (i18n "readingStatusRead")
+    "want-to-read" (i18n "readingStatusWantToRead")
+    "dropped"      (i18n "readingStatusDropped")
+  }}
+
+  <div class="reading-stream">
+    {{ range .Paginator.Pages }}
+    <article class="reading-item">
+      <div class="reading-item__header">
+        <a class="reading-item__title" href="{{ .Permalink }}">{{ .Title }}</a>
+        {{ with .Params.author }}<span class="reading-item__author">— {{ . }}</span>{{ end }}
+        {{ with .Params.status }}
+        <span class="reading-status reading-status--{{ . }}">{{ index $statusLabels . | default . }}</span>
+        {{ end }}
+      </div>
+      {{ with .Description }}<p class="reading-item__desc">{{ . }}</p>{{ end }}
+      {{ partial "tags.html" . }}
+    </article>
+    {{ end }}
+    {{ partial "pagination.html" . }}
+  </div>
+</div>
+{{ end }}
