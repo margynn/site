@@ -26,7 +26,7 @@ title = "Martin"
 weight = 2
 [languages.en.params]
 [languages.en.params.logo]
-logoText = "martin@blog:~"
+logoText = "~/"
 logoHomeLink = "/"
 [languages.en.menu]
 [[languages.en.menu.main]]
@@ -60,7 +60,7 @@ title = "Martin"
 weight = 1
 [languages.fr.params]
 [languages.fr.params.logo]
-logoText = "martin@blog:~"
+logoText = "~/"
 logoHomeLink = "/fr/"
 [languages.fr.menu]
 [[languages.fr.menu.main]]

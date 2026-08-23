@@ -2,10 +2,17 @@ pre:not(.chroma) {
   padding: 10px;
 }
 
+/* Override hardcoded chroma theme colors to respect CSS vars */
+.chroma {
+  background-color: color-mix(in srgb, var(--foreground) 5%, transparent) !important;
+  color: var(--foreground) !important;
+}
+
 .highlight pre.chroma {
   margin: 0;
   padding: 16px 20px;
   color: var(--foreground);
+  background-color: color-mix(in srgb, var(--foreground) 5%, transparent) !important;
 }
 
 pre code {

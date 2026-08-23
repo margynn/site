@@ -20,7 +20,10 @@
 .header__nav-link {
   color: color-mix(in srgb, var(--foreground) 65%, transparent);
   text-decoration: none;
-  font-size: calc(var(--font-size) * 0.95);
+  font-size: calc(var(--font-size) * 0.85);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   white-space: nowrap;
   transition: color 0.15s;
 }
@@ -45,10 +48,8 @@
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  background: var(--accent);
-  color: var(--background);
+  color: var(--accent);
   font-weight: bold;
-  padding: 0.3rem 0.6rem;
   white-space: nowrap;
   flex-shrink: 0;
 }

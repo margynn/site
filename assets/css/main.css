@@ -21,9 +21,10 @@
 /* ─── Variables ───────────────────────────────────────────────────────────────── */
 
 :root {
-  --background: #1a170f;
-  --foreground: #eceae5;
-  --accent: #eec35e;
+  --background: #1a2132;
+  --foreground: #c9d1d9;
+  --accent: #58a6ff;
+  --gradient-end: #090d1e;
   --comment: color-mix(in srgb, var(--foreground) 40%, transparent);
   --code-border: color-mix(in srgb, var(--foreground) 10%, transparent);
   --font-size: 0.875rem;
@@ -58,7 +59,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--background);
-  background-image: radial-gradient(ellipse 120% 80% at -10% -10%, color-mix(in srgb, var(--accent) 14%, transparent), transparent);
+  background-image: linear-gradient(to right bottom, var(--background), var(--gradient-end));
   font-family: "Geist Mono", "Fira Code", Monaco, Consolas, monospace;
   font-size: var(--font-size);
   line-height: var(--line-height);
@@ -183,9 +184,8 @@ select option { background: var(--background); }
 img {
   display: block;
   max-width: 100%;
-  border: 8px solid var(--accent);
+  border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);
   border-radius: var(--radius);
-  padding: 8px;
   overflow: hidden;
 }
 
@@ -200,14 +200,12 @@ figure.right  { margin-left: auto; }
 figure img, figure video { margin-bottom: 0; }
 
 figure figcaption {
-  background: var(--accent);
-  color: var(--background);
+  color: color-mix(in srgb, var(--foreground) 55%, transparent);
   text-align: center;
-  font-size: var(--font-size);
+  font-size: calc(var(--font-size) * 0.9);
   font-weight: normal;
-  margin-top: -8px;
-  padding: 0 8px;
-  border-radius: 0 0 var(--radius) var(--radius);
+  margin-top: 6px;
+  padding: 0 4px;
 }
 
 figure figcaption p:first-child { margin-top: 0; }
