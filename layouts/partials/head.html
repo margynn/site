@@ -43,7 +43,3 @@
   <meta property="article:published_time" content="{{ time .Date }}" />
 {{ end }}
 
-<!-- RSS -->
-{{ with .OutputFormats.Get "RSS" }}
-  <link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" />
-{{ end }}

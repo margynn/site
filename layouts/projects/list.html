@@ -1,30 +1,18 @@
 {{ define "main" }}
-<div class="projects">
-  {{ with .Content }}
-    <div class="index-content">{{ . }}</div>
-  {{ end }}
+<div class="posts-list">
+  {{ with .Content }}<div class="index-content">{{ . }}</div>{{ end }}
 
-  <div class="projects-grid">
+  <div class="post-stream projects-stream">
     {{ range .Pages }}
-      <div class="project-card">
-        <h2 class="project-card__title">
-          <a href="{{ .Permalink }}">{{ .Title }}</a>
-        </h2>
-        {{ if .Description }}
-          <p class="project-card__description">{{ .Description | markdownify }}</p>
-        {{ end }}
-        <div class="project-card__links">
-          {{ with .Params.github }}
-            <a href="{{ . }}" target="_blank" rel="noopener">GitHub</a>
-          {{ end }}
-          {{ with .Params.website }}
-            <a href="{{ . }}" target="_blank" rel="noopener">Website</a>
-          {{ end }}
-          {{ with .Params.status }}
-            <span class="project-card__status">{{ . }}</span>
-          {{ end }}
+    <article class="post-item">
+      <div class="post-item__body">
+        <div class="post-item__header">
+          <a class="post-item__title" href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+          {{ with .Params.github }}<a class="project-github" href="{{ . }}" target="_blank" rel="noopener">{{ os.ReadFile "static/icons/github.svg" | safeHTML }}</a>{{ end }}
         </div>
+        {{ with .Description }}<p class="post-item__desc">{{ . }}</p>{{ end }}
       </div>
+    </article>
     {{ end }}
   </div>
 </div>

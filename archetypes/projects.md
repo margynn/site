@@ -5,6 +5,4 @@ draft = false
 description = ''
 tags = []
 github = ''
-website = ''
-status = 'active'
 +++

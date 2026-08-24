@@ -1,0 +1,56 @@
+- generic [ref=f51e2]:
+  - banner [ref=f51e3]:
+    - generic [ref=f51e4]:
+      - link "~/" [ref=f51e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=f51e7]:
+        - link "Articles" [ref=f51e8] [cursor=pointer]:
+          - /url: /articles
+        - link "Projects" [ref=f51e9] [cursor=pointer]:
+          - /url: /projects
+        - link "Bookmarks" [ref=f51e10] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "Reading" [ref=f51e11] [cursor=pointer]:
+          - /url: /reading
+        - link "Traces" [ref=f51e12] [cursor=pointer]:
+          - /url: /thoughts
+      - generic [ref=f51e13]:
+        - generic [ref=f51e14]:
+          - link "FR" [ref=f51e15] [cursor=pointer]:
+            - /url: http://localhost:1313/fr/projects/
+          - generic [ref=f51e16]: "|"
+          - generic [ref=f51e17]: EN
+        - button "Switch theme" [ref=f51e18] [cursor=pointer]
+  - generic [ref=f51e24]:
+    - article [ref=f51e25]:
+      - generic [ref=f51e26]:
+        - generic [ref=f51e27]:
+          - link "Encryptly" [ref=f51e28] [cursor=pointer]:
+            - /url: http://localhost:1313/projects/encryptly/
+          - link [ref=f51e29] [cursor=pointer]:
+            - /url: https://github.com/margynn/encryptly
+        - paragraph [ref=f51e32]: Encrypt Google Drive files.
+    - article [ref=f51e33]:
+      - generic [ref=f51e34]:
+        - generic [ref=f51e35]:
+          - link "Graft" [ref=f51e36] [cursor=pointer]:
+            - /url: http://localhost:1313/projects/graft/
+          - link [ref=f51e37] [cursor=pointer]:
+            - /url: https://github.com/margynn/graft
+        - paragraph [ref=f51e40]: Raft distributed consensus in Go.
+    - article [ref=f51e41]:
+      - generic [ref=f51e42]:
+        - generic [ref=f51e43]:
+          - link "rust_zstd" [ref=f51e44] [cursor=pointer]:
+            - /url: http://localhost:1313/projects/rust-zstd/
+          - link [ref=f51e45] [cursor=pointer]:
+            - /url: https://github.com/margynn/rust_zstd
+        - paragraph [ref=f51e48]: Pure Rust Zstd decompressor.
+  - contentinfo [ref=f51e49]:
+    - generic [ref=f51e50]:
+      - text: 2026 · Martin Guyard ·
+      - link "GitHub" [ref=f51e51] [cursor=pointer]:
+        - /url: https://github.com/margynn
+      - text: ·
+      - link "LinkedIn" [ref=f51e52] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/martin-g-105b74150/

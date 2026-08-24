@@ -1,6 +1,6 @@
 <footer class="footer">
   <div class="footer__inner">
-    {{ now.Year }} · Martin Guyard{{ with .OutputFormats.Get "RSS" }} · <a href="{{ .RelPermalink }}">RSS</a>{{ end }}{{ with $.Site.Params.githubURL }} · <a href="{{ . }}" target="_blank" rel="noopener">GitHub</a>{{ end }}{{ with $.Site.Params.linkedinURL }} · <a href="{{ . }}" target="_blank" rel="noopener">LinkedIn</a>{{ end }}
+    {{ now.Year }} · Martin Guyard{{ with $.Site.Params.githubURL }} · <a href="{{ . }}" target="_blank" rel="noopener">GitHub</a>{{ end }}{{ with $.Site.Params.linkedinURL }} · <a href="{{ . }}" target="_blank" rel="noopener">LinkedIn</a>{{ end }}
   </div>
 </footer>
 

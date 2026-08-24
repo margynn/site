@@ -1,0 +1,45 @@
+- generic [ref=f54e2]:
+  - banner [ref=f54e3]:
+    - generic [ref=f54e4]:
+      - link "~/" [ref=f54e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=f54e7]:
+        - link "Articles" [ref=f54e8] [cursor=pointer]:
+          - /url: /articles
+        - link "Projects" [ref=f54e9] [cursor=pointer]:
+          - /url: /projects
+        - link "Bookmarks" [ref=f54e10] [cursor=pointer]:
+          - /url: /bookmarks
+        - link "Reading" [ref=f54e11] [cursor=pointer]:
+          - /url: /reading
+        - link "Traces" [ref=f54e12] [cursor=pointer]:
+          - /url: /thoughts
+      - generic [ref=f54e13]:
+        - generic [ref=f54e14]:
+          - link "FR" [ref=f54e15] [cursor=pointer]:
+            - /url: http://localhost:1313/fr/bookmarks/
+          - generic [ref=f54e16]: "|"
+          - generic [ref=f54e17]: EN
+        - button "Switch theme" [ref=f54e18] [cursor=pointer]
+  - article [ref=f54e25]:
+    - generic [ref=f54e26]: article
+    - generic [ref=f54e27]:
+      - generic [ref=f54e28]:
+        - link "What Color is Your Function?" [ref=f54e29] [cursor=pointer]:
+          - /url: https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/
+        - generic [ref=f54e30]: — Bob Nystrom
+      - generic [ref=f54e31]:
+        - link "programming" [ref=f54e32] [cursor=pointer]:
+          - /url: /tags/programming/
+        - link "async" [ref=f54e33] [cursor=pointer]:
+          - /url: /tags/async/
+        - link "languages" [ref=f54e34] [cursor=pointer]:
+          - /url: /tags/languages/
+  - contentinfo [ref=f54e35]:
+    - generic [ref=f54e36]:
+      - text: 2026 · Martin Guyard ·
+      - link "GitHub" [ref=f54e37] [cursor=pointer]:
+        - /url: https://github.com/margynn
+      - text: ·
+      - link "LinkedIn" [ref=f54e38] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/martin-g-105b74150/

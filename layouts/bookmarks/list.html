@@ -5,10 +5,9 @@
   <div class="post-stream">
     {{ range .Paginator.Pages }}
     <article class="post-item">
-      <time class="post-item__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
       <div class="post-item__body">
         <div class="post-item__header">
-          <a class="post-item__title" href="{{ .Params.link }}" target="_blank" rel="noopener">{{ .Title }}</a>
+          {{ with .Params.bookmark_type }}<span class="bookmark-type">[{{ . | upper }}]</span> {{ end }}<a class="post-item__title" href="{{ .Params.link }}" target="_blank" rel="noopener">{{ .Title }}</a>
           {{ with .Params.author }}<span class="post-item__author">— {{ . }}</span>{{ end }}
         </div>
         {{ with .Description }}<p class="post-item__desc">{{ . }}</p>{{ end }}
