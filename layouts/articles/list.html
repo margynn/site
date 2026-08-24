@@ -1,0 +1,19 @@
+{{ define "main" }}
+<div class="posts-list">
+  {{ with .Content }}<div class="index-content">{{ . }}</div>{{ end }}
+
+  <div class="post-stream">
+    {{ range .Paginator.Pages }}
+    <article class="post-item">
+      <time class="post-item__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      <div class="post-item__body">
+        <a class="post-item__title" href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+        {{ with .Description }}<p class="post-item__desc">{{ . }}</p>{{ end }}
+        {{ partial "tags.html" . }}
+      </div>
+    </article>
+    {{ end }}
+    {{ partial "pagination.html" . }}
+  </div>
+</div>
+{{ end }}

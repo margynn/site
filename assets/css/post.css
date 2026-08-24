@@ -1,0 +1,142 @@
+.index-content {
+  margin: 25px 0;
+}
+
+.posts {
+  width: 100%;
+}
+
+.post {
+  width: 100%;
+  text-align: left;
+  padding: 20px 0;
+}
+
+.post:not(:last-of-type) {
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+.post-meta {
+  font-size: calc(var(--font-size) * 0.8);
+  margin-bottom: 10px;
+  color: color-mix(in srgb, var(--foreground) 65%, transparent);
+}
+
+.post-meta > *:not(:first-child)::before {
+  content: "::";
+  display: inline-block;
+  margin: 0 8px;
+}
+
+.post-title {
+  color: var(--accent);
+  font-size: calc(var(--font-size) * 2);
+  line-height: 1.25;
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+  padding-bottom: 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  text-decoration: none !important;
+}
+
+.post-title a {
+  text-decoration: none;
+}
+
+.table-of-contents {
+  margin: 30px 0;
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.table-of-contents summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: color-mix(in srgb, var(--foreground) 4%, transparent);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: calc(var(--font-size) * 0.9);
+  color: var(--accent);
+  user-select: none;
+  list-style: none;
+}
+
+.table-of-contents summary::before {
+  content: "▶";
+  font-size: 0.65em;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.table-of-contents[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.table-of-contents summary::-webkit-details-marker {
+  display: none;
+}
+
+.table-of-contents nav {
+  padding: 10px 16px 14px;
+}
+
+/* Prevent the post's dash bullet from bleeding into TOC items */
+.table-of-contents ul li::before {
+  display: none;
+}
+
+.post-content {
+  margin-top: 25px;
+}
+
+.post-cover {
+  margin: 25px 0;
+}
+
+.post ul {
+  list-style: none;
+}
+
+.post ul li:not(:empty)::before {
+  content: "-";
+  position: absolute;
+  left: -20px;
+  color: var(--accent);
+}
+
+.hanchor,
+.anchor {
+  position: absolute;
+  color: var(--accent);
+  text-decoration: none;
+  margin-left: 10px;
+  visibility: hidden;
+}
+
+h1:hover .hanchor, h1:hover .anchor,
+h2:hover .hanchor, h2:hover .anchor,
+h3:hover .hanchor, h3:hover .anchor,
+h4:hover .hanchor, h4:hover .anchor,
+h5:hover .hanchor, h5:hover .anchor,
+h6:hover .hanchor, h6:hover .anchor {
+  visibility: visible;
+}
+
+.footnotes {
+  color: color-mix(in srgb, var(--foreground) 50%, transparent);
+}
+
+.footnotes hr {
+  background: color-mix(in srgb, var(--foreground) 50%, transparent);
+}
+
+@media (max-width: 684px) {
+  .post-cover {
+    padding: 10px;
+    border-width: 10px;
+  }
+}
+

@@ -1,0 +1,24 @@
+{{ define "main" }}
+<div class="tag-page">
+  <h1 class="post-title">#{{ .Title }}</h1>
+
+  {{ $labels := dict "articles" (i18n "feedArticles") "thoughts" (i18n "feedThoughts") "bookmarks" (i18n "feedBookmarks") "reading" (i18n "feedReading") }}
+  <div class="home-feed">
+    {{ range .Paginator.Pages }}
+    {{ $section := .Section }}
+    <div class="home-feed__item">
+      {{ if or (eq $section "articles") (eq $section "thoughts") }}<time class="home-feed__date">{{ .Date.Format "2006-01-02" }}</time>{{ else }}<span class="home-feed__date"></span>{{ end }}
+      <span class="home-feed__type">[{{ index $labels $section | default $section }}]</span>
+      {{ if eq $section "bookmarks" }}
+        <a class="home-feed__title" href="{{ .Params.link }}" target="_blank" rel="noopener">{{ .Title }}</a>
+      {{ else if .Title }}
+        <a class="home-feed__title" href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+      {{ else }}
+        <a class="home-feed__title home-feed__title--untitled" href="{{ .Permalink }}">{{ .Summary | plainify | truncate 60 "…" }}</a>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+  {{ partial "pagination.html" . }}
+</div>
+{{ end }}

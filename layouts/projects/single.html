@@ -1,0 +1,15 @@
+{{ define "main" }}
+<article class="post project">
+  <h1 class="post-title">{{ .Title | markdownify }}</h1>
+
+  {{ with .Params.github }}
+  <div class="project__links">
+    <a class="button inline" href="{{ . }}" target="_blank" rel="noopener">[GitHub]</a>
+  </div>
+  {{ end }}
+
+  <div class="post-content">
+    {{ .Content }}
+  </div>
+</article>
+{{ end }}

@@ -1,0 +1,10 @@
+{{ $title := .Get "title" | default "terminal" }}
+<div class="terminal">
+  <div class="terminal__header">
+    <span class="terminal__dot terminal__dot--red"></span>
+    <span class="terminal__dot terminal__dot--yellow"></span>
+    <span class="terminal__dot terminal__dot--green"></span>
+    <span class="terminal__title">{{ $title }}</span>
+  </div>
+  <pre class="terminal__body"><code>{{ .Inner }}</code></pre>
+</div>

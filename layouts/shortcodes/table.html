@@ -1,0 +1,4 @@
+{{ $colHeader := .Get "col-header" }}
+<div class="{{ if $colHeader }}table-col-header{{ end }}">
+  {{ .Inner | markdownify }}
+</div>

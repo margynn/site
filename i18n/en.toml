@@ -1,0 +1,131 @@
+# Home sections
+[latestPosts]
+other = "Latest Posts"
+
+[allPosts]
+other = "All posts"
+
+[projects]
+other = "Projects"
+
+[allProjects]
+other = "All projects"
+
+# Post meta
+[readMore]
+other = "Read more"
+
+[readOtherPosts]
+other = "Read other posts"
+
+[minRead]
+other = "min read"
+
+[words]
+other = "words"
+
+# Navigation
+[menuMore]
+other = "Show more"
+
+[menuArticles]
+other = "Articles"
+
+[menuProjects]
+other = "Projects"
+
+[menuBookmarks]
+other = "Bookmarks"
+
+[menuReading]
+other = "Reading"
+
+[menuThoughts]
+other = "Traces"
+
+# Month names
+[monthJan]
+other = "Jan"
+[monthFeb]
+other = "Feb"
+[monthMar]
+other = "Mar"
+[monthApr]
+other = "Apr"
+[monthMay]
+other = "May"
+[monthJun]
+other = "Jun"
+[monthJul]
+other = "Jul"
+[monthAug]
+other = "Aug"
+[monthSep]
+other = "Sep"
+[monthOct]
+other = "Oct"
+[monthNov]
+other = "Nov"
+[monthDec]
+other = "Dec"
+
+# Reading statuses
+[readingStatusReading]
+other = "Currently Reading"
+
+[readingStatusRead]
+other = "Read"
+
+[readingStatusWantToRead]
+other = "Want to Read"
+
+[readingStatusDropped]
+other = "Dropped"
+
+# Bookmark types
+[bookmarkTypeVideo]
+other = "Video"
+[bookmarkTypeArticle]
+other = "Article"
+[bookmarkTypeBlog]
+other = "Blog"
+[bookmarkTypePaper]
+other = "Paper"
+[bookmarkTypeTool]
+other = "Tool"
+[bookmarkTypePodcast]
+other = "Podcast"
+[bookmarkTypeOther]
+other = "Other"
+
+# Actions
+[open]
+other = "Open"
+
+# Pagination
+[newerPosts]
+other = "Newer"
+[olderPosts]
+other = "Older"
+
+# 404
+[notFound]
+other = "Page not found"
+[backHome]
+other = "Back to home"
+
+# Feed section labels
+[feedPosts]
+other = "post"
+
+[feedArticles]
+other = "article"
+
+[feedThoughts]
+other = "trace"
+
+[feedBookmarks]
+other = "bookmark"
+
+[feedReading]
+other = "reading"

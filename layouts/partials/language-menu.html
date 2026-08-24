@@ -1,0 +1,19 @@
+{{ $current := $.Site.Language.Lang }}
+{{ $translations := .AllTranslations }}
+{{ if not $translations }}{{ $translations = $.Site.Home.AllTranslations }}{{ end }}
+<div class="lang-selector">
+  {{ range $i, $s := hugo.Sites }}
+    {{ $lang := $s.Language.Lang }}
+    {{ if gt $i 0 }}<span class="lang-selector__sep">|</span>{{ end }}
+    {{ if eq $lang $current }}
+      <span class="lang-selector__active">{{ $lang | upper }}</span>
+    {{ else }}
+      {{ $page := index (where $translations "Language.Lang" $lang) 0 }}
+      {{ if $page }}
+        <a class="lang-selector__link" href="{{ $page.Permalink }}" data-lang-switch="{{ $lang }}">{{ $lang | upper }}</a>
+      {{ else }}
+        <a class="lang-selector__link" href="{{ $s.Home.Permalink }}" data-lang-switch="{{ $lang }}">{{ $lang | upper }}</a>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+</div>

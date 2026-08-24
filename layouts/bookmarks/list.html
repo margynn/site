@@ -1,0 +1,21 @@
+{{ define "main" }}
+<div class="bookmarks">
+  {{ with .Content }}<div class="index-content">{{ . }}</div>{{ end }}
+
+  <div class="post-stream">
+    {{ range .Paginator.Pages }}
+    <article class="post-item">
+      <div class="post-item__body">
+        <div class="post-item__header">
+          {{ with .Params.bookmark_type }}<span class="bookmark-type">[{{ . | upper }}]</span> {{ end }}<a class="post-item__title" href="{{ .Params.link }}" target="_blank" rel="noopener">{{ .Title }}</a>
+          {{ with .Params.author }}<span class="post-item__author">— {{ . }}</span>{{ end }}
+        </div>
+        {{ with .Description }}<p class="post-item__desc">{{ . }}</p>{{ end }}
+        {{ partial "tags.html" . }}
+      </div>
+    </article>
+    {{ end }}
+    {{ partial "pagination.html" . }}
+  </div>
+</div>
+{{ end }}

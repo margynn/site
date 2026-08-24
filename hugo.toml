@@ -1,0 +1,98 @@
+baseURL = 'https://martin-snclr.github.io/'
+pagination.pagerSize = 5
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = false
+
+[outputs]
+home = ["HTML"]
+section = ["HTML"]
+taxonomy = ["HTML"]
+term = ["HTML"]
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+codeFences = true
+lineNos = false
+noClasses = false
+
+[taxonomies]
+tag = "tags"
+
+[params]
+contentTypeName = "articles"
+fullWidthTheme = false
+centerTheme = true
+showLanguageSelector = true
+githubURL = "https://github.com/margynn"
+linkedinURL = "https://www.linkedin.com/in/martin-g-105b74150/"
+
+[languages]
+[languages.en]
+title = "Martin"
+weight = 2
+[languages.en.params]
+[languages.en.params.logo]
+logoText = "~/"
+logoHomeLink = "/"
+[languages.en.menu]
+[[languages.en.menu.main]]
+identifier = "articles"
+name = "Articles"
+url = "/articles"
+weight = 1
+[[languages.en.menu.main]]
+identifier = "projects"
+name = "Projects"
+url = "/projects"
+weight = 2
+[[languages.en.menu.main]]
+identifier = "bookmarks"
+name = "Bookmarks"
+url = "/bookmarks"
+weight = 3
+[[languages.en.menu.main]]
+identifier = "reading"
+name = "Reading"
+url = "/reading"
+weight = 4
+[[languages.en.menu.main]]
+identifier = "thoughts"
+name = "Traces"
+url = "/thoughts"
+weight = 5
+
+[languages.fr]
+title = "Martin"
+weight = 1
+[languages.fr.params]
+[languages.fr.params.logo]
+logoText = "~/"
+logoHomeLink = "/fr/"
+[languages.fr.menu]
+[[languages.fr.menu.main]]
+identifier = "articles"
+name = "Articles"
+url = "/fr/articles"
+weight = 1
+[[languages.fr.menu.main]]
+identifier = "projects"
+name = "Projets"
+url = "/fr/projects"
+weight = 2
+[[languages.fr.menu.main]]
+identifier = "bookmarks"
+name = "Favoris"
+url = "/fr/bookmarks"
+weight = 3
+[[languages.fr.menu.main]]
+identifier = "reading"
+name = "Lectures"
+url = "/fr/reading"
+weight = 4
+[[languages.fr.menu.main]]
+identifier = "thoughts"
+name = "Traces"
+url = "/fr/thoughts"
+weight = 5

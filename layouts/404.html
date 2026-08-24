@@ -1,0 +1,10 @@
+{{ define "main" }}
+  <div class="post">
+    <h1 class="post-title">404 — {{ i18n "notFound" }}</h1>
+
+    <div class="post-content">
+      <a href="{{ "/" | absURL }}">{{ i18n "backHome" }}&nbsp;→</a>
+    </div>
+
+  </div>
+{{ end }}
