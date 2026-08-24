@@ -19,6 +19,8 @@ contentTypeName = "articles"
 fullWidthTheme = false
 centerTheme = true
 showLanguageSelector = true
+githubURL = "https://github.com/your-username"
+linkedinURL = "https://linkedin.com/in/your-username"
 
 [languages]
 [languages.en]

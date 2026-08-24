@@ -11,7 +11,7 @@
 {{ end }}
 <link rel="canonical" href="{{ .Permalink }}" />
 
-<script>(function(){var n=localStorage.getItem("theme");var t={dark:["#1a2132","#c9d1d9","#58a6ff","#090d1e"],light:["#f5f0e8","#1a1a1a","#b85c45","#e0dbd2"]}[n];if(t){var r=document.documentElement;r.style.setProperty("--background",t[0]);r.style.setProperty("--foreground",t[1]);r.style.setProperty("--accent",t[2]);r.style.setProperty("--gradient-end",t[3]);r.dataset.theme=n;}})()</script>
+<script>(function(){var n=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");document.documentElement.dataset.theme=n;})()</script>
 {{ $css := resources.Match "css/*.css" }}
 {{ range $css }}
   {{ $styles := . | minify | fingerprint }}
@@ -19,11 +19,7 @@
 {{ end }}
 
 <!-- Icons -->
-<link rel="icon" type="image/png" sizes="16x16" href="{{ "favicon-16.png" | absURL }}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{ "favicon-32.png" | absURL }}">
-<link rel="icon" type="image/png" sizes="96x96" href="{{ "favicon-96.png" | absURL }}">
-<link rel="icon" type="image/png" sizes="192x192" href="{{ "favicon-192.png" | absURL }}">
-<link rel="apple-touch-icon" sizes="180x180" href="{{ "apple-touch-icon.png" | absURL }}">
+<link rel="icon" type="image/svg+xml" href="{{ "favicon-dark.svg" | absURL }}" id="favicon-svg">
 
 <!-- OG -->
 <meta property="og:locale" content="{{ $.Site.Language.Lang }}" />

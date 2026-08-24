@@ -1,26 +1,18 @@
-const THEMES = {
-  dark:  { background: "#1a2132", foreground: "#c9d1d9", accent: "#58a6ff", gradientEnd: "#090d1e" },
-  light: { background: "#f5f0e8", foreground: "#1a1a1a", accent: "#b85c45", gradientEnd: "#e0dbd2" },
-};
 const THEME_ORDER = ["dark", "light"];
 
 function applyTheme(name) {
-  const t = THEMES[name];
-  if (!t) return;
-  const r = document.documentElement;
-  r.style.setProperty("--background", t.background);
-  r.style.setProperty("--foreground", t.foreground);
-  r.style.setProperty("--accent", t.accent);
-  r.style.setProperty("--gradient-end", t.gradientEnd);
-  r.dataset.theme = name;
+  document.documentElement.dataset.theme = name;
   localStorage.setItem("theme", name);
+  const favicon = document.getElementById("favicon-svg");
+  if (favicon) favicon.href = `/favicon-${name}.svg`;
 }
 
 // Cycle button
 const cycleBtn = document.getElementById("theme-cycle");
 if (cycleBtn) {
   cycleBtn.addEventListener("click", () => {
-    const current = localStorage.getItem("theme") || "dark";
+    const systemDefault = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    const current = localStorage.getItem("theme") || systemDefault;
     const idx = THEME_ORDER.indexOf(current);
     applyTheme(THEME_ORDER[(idx + 1) % THEME_ORDER.length]);
   });

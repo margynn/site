@@ -36,6 +36,10 @@
   color: var(--accent);
 }
 
+.header__nav-link--active:hover {
+  color: var(--accent);
+}
+
 .header__right {
   display: flex;
   align-items: center;

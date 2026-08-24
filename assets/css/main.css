@@ -21,10 +21,6 @@
 /* ─── Variables ───────────────────────────────────────────────────────────────── */
 
 :root {
-  --background: #1a2132;
-  --foreground: #c9d1d9;
-  --accent: #58a6ff;
-  --gradient-end: #090d1e;
   --comment: color-mix(in srgb, var(--foreground) 40%, transparent);
   --code-border: color-mix(in srgb, var(--foreground) 10%, transparent);
   --font-size: 0.875rem;
@@ -38,6 +34,32 @@
   --alert-success: #5aaa6a;
   --alert-danger: #e05555;
   --alert-note: #8a8a9a;
+}
+
+/* ─── Themes ──────────────────────────────────────────────────────────────────── */
+
+:root,
+[data-theme="dark"] {
+  --background: #1a2132;
+  --foreground: #c9d1d9;
+  --accent: #06b6d4;
+  --gradient-end: #090d1e;
+}
+
+[data-theme="light"] {
+  --background: #faf6ef;
+  --foreground: #1a1a1a;
+  --accent: #c4513b;
+  --gradient-end: #ede8de;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --background: #faf6ef;
+    --foreground: #1a1a1a;
+    --accent: #c4513b;
+    --gradient-end: #ede8de;
+  }
 }
 
 /* ─── Reset ───────────────────────────────────────────────────────────────────── */
