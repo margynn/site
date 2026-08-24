@@ -7,7 +7,7 @@
     {{ range .Paginator.Pages }}
     {{ $section := .Section }}
     <div class="home-feed__item">
-      {{ if ne $section "reading" }}<time class="home-feed__date">{{ .Date.Format "2006-01-02" }}</time>{{ else }}<span class="home-feed__date"></span>{{ end }}
+      {{ if or (eq $section "articles") (eq $section "thoughts") }}<time class="home-feed__date">{{ .Date.Format "2006-01-02" }}</time>{{ else }}<span class="home-feed__date"></span>{{ end }}
       <span class="home-feed__type">[{{ index $labels $section | default $section }}]</span>
       {{ if eq $section "bookmarks" }}
         <a class="home-feed__title" href="{{ .Params.link }}" target="_blank" rel="noopener">{{ .Title }}</a>
