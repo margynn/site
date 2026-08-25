@@ -1,4 +1,4 @@
-baseURL = 'https://martin-snclr.github.io/'
+baseURL = 'https://margyn.dev/'
 pagination.pagerSize = 5
 defaultContentLanguage = 'en'
 defaultContentLanguageInSubdir = false
@@ -20,6 +20,9 @@ noClasses = false
 [taxonomies]
 tag = "tags"
 
+[security.funcs]
+getenv = ['^HUGO_', '^CI$', '^GITHUB_SHA$']
+
 [params]
 contentTypeName = "articles"
 fullWidthTheme = false
@@ -27,6 +30,7 @@ centerTheme = true
 showLanguageSelector = true
 githubURL = "https://github.com/margynn"
 linkedinURL = "https://www.linkedin.com/in/martin-g-105b74150/"
+siteRepoURL = "https://github.com/margynn/site"
 
 [languages]
 [languages.en]

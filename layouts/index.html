@@ -14,7 +14,6 @@
     {{ range $recent }}
     {{ $label := index $labels .Section | default .Section }}
     <div class="home-feed__item">
-      <time class="home-feed__date">{{ .Date.Format "2006-01-02" }}</time>
       <span class="home-feed__type">[{{ $label }}]</span>
       {{ $noSingle := in (slice "bookmarks") .Section }}
       {{ if .Title }}

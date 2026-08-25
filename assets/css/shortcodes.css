@@ -10,40 +10,8 @@
   border-bottom: 1px solid var(--accent);
   color: var(--foreground);
 }
-.box__content { padding: 0; }
 .box__content > *:first-child { margin-top: 0; }
 .box__content > *:last-child  { margin-bottom: 0; }
-
-/* ─── Tabs ───────────────────────────────────────────────────────────────────── */
-
-.tabs {
-  margin: 20px 0;
-  border: 1px solid var(--code-border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-.tabs__nav {
-  display: flex;
-  flex-wrap: wrap;
-  background: color-mix(in srgb, var(--foreground) 4%, transparent);
-  border-bottom: 1px solid var(--code-border);
-}
-.tabs__btn {
-  padding: 8px 16px;
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid transparent;
-  color: var(--comment);
-  cursor: pointer;
-  font: inherit;
-  font-size: calc(var(--font-size) * 0.85);
-  transition: color 0.15s, border-color 0.15s;
-}
-.tabs__btn:hover { color: var(--foreground); }
-.tabs__btn--active { color: var(--accent); border-bottom-color: var(--accent); }
-.tab-panel { padding: 16px; }
-.tab-panel > *:first-child { margin-top: 0; }
-.tab-panel > *:last-child  { margin-bottom: 0; }
 
 /* ─── Terminal ───────────────────────────────────────────────────────────────── */
 
@@ -140,30 +108,6 @@
   overflow: hidden;
 }
 .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
-
-/* ─── Mermaid ────────────────────────────────────────────────────────────────── */
-
-.mermaid {
-  margin: 20px 0;
-  padding: 20px;
-  background: color-mix(in srgb, var(--foreground) 3%, transparent);
-  border: 1px solid var(--code-border);
-  border-radius: var(--radius-md);
-  text-align: center;
-  overflow-x: auto;
-}
-
-/* ─── Math (KaTeX) ───────────────────────────────────────────────────────────── */
-
-.math-display {
-  overflow-x: auto;
-  padding: 14px 16px;
-  margin: 20px 0;
-  background: color-mix(in srgb, var(--foreground) 3%, transparent);
-  border: 1px solid var(--code-border);
-  border-radius: var(--radius-md);
-  text-align: center;
-}
 
 /* ─── Collapse ───────────────────────────────────────────────────────────────── */
 

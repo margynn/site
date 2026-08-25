@@ -1,26 +1,16 @@
-// Tabs
-document.querySelectorAll("[data-tabs]").forEach((container) => {
-  const panels = Array.from(container.querySelectorAll("[data-tab]"));
-  if (!panels.length) return;
-
-  const nav = document.createElement("div");
-  nav.className = "tabs__nav";
-
-  panels.forEach((panel, i) => {
-    const btn = document.createElement("button");
-    btn.className = "tabs__btn" + (i === 0 ? " tabs__btn--active" : "");
-    btn.textContent = panel.dataset.tab;
-    btn.addEventListener("click", () => {
-      panels.forEach((p) => (p.hidden = true));
-      container.querySelectorAll(".tabs__btn").forEach((b) => b.classList.remove("tabs__btn--active"));
-      panel.hidden = false;
-      btn.classList.add("tabs__btn--active");
-    });
-    nav.appendChild(btn);
-    if (i > 0) panel.hidden = true;
-  });
-
-  container.prepend(nav);
+// Select-all scoped to highlight block
+document.addEventListener("keydown", (e) => {
+  if (!(e.ctrlKey || e.metaKey) || e.key !== "a") return;
+  const node = window.getSelection()?.anchorNode;
+  if (!node) return;
+  const pre = (node.nodeType === 1 ? node : node.parentElement)?.closest(".highlight pre");
+  if (!pre) return;
+  e.preventDefault();
+  const range = document.createRange();
+  range.selectNodeContents(pre);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
 });
 
 // Spoiler

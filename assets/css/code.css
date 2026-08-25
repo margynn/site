@@ -1,19 +1,16 @@
-pre:not(.chroma) {
-  padding: 10px;
-}
-
-/* Override hardcoded chroma theme colors to respect CSS vars */
-.chroma {
-  background-color: color-mix(in srgb, var(--foreground) 5%, transparent) !important;
-  color: var(--foreground) !important;
-}
-
+/* Override chroma's hardcoded colors with CSS-var-aware values */
 .highlight pre.chroma {
   margin: 0;
   padding: 16px 20px;
+  border: none;
   color: var(--foreground);
   background-color: color-mix(in srgb, var(--foreground) 5%, transparent) !important;
 }
+
+/* Reset pre inside .highlight (fallback for non-chroma pre) */
+.highlight pre { margin: 0; border: none; }
+
+pre:not(.chroma) { padding: 10px; }
 
 pre code {
   color: var(--foreground);
@@ -31,62 +28,8 @@ code {
 }
 
 .highlight {
-  position: relative;
   margin: 20px 0;
   border: 1px solid var(--code-border);
   border-radius: var(--radius-md);
   overflow: hidden;
-}
-
-.highlight pre {
-  border: none;
-  margin: 0;
-  padding: 0;
-}
-
-.code-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: color-mix(in srgb, var(--foreground) 5%, transparent);
-  border: 1px solid var(--code-border);
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
-  color: var(--comment);
-  text-transform: uppercase;
-  font-size: calc(var(--font-size) * 0.7);
-  padding: 6px 10px;
-  line-height: 1;
-  margin-top: 20px;
-}
-
-.code-title + .highlight {
-  margin-top: 0;
-  border-top: none;
-  border-radius: 0 0 var(--radius-md) var(--radius-md);
-}
-
-.copy-button {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 8px;
-  text-decoration: none;
-  text-align: center;
-  font-size: calc(var(--font-size) * 0.75);
-  font-weight: 500;
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
-  border-radius: var(--radius-sm);
-  color: var(--comment);
-  background: color-mix(in srgb, var(--foreground) 5%, var(--background));
-  appearance: none;
-  cursor: pointer;
-  outline: none;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
-}
-
-.copy-button:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 8%, var(--background));
 }

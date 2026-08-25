@@ -205,31 +205,6 @@ After two linebreaks.
 
 ---
 
-## Tabs
-
-{{< tabs >}}
-{{< tab name="Python" >}}
-```python
-def greet(name: str) -> str:
-    return f"Hello, {name}!"
-```
-{{< /tab >}}
-{{< tab name="Go" >}}
-```go
-func greet(name string) string {
-    return "Hello, " + name + "!"
-}
-```
-{{< /tab >}}
-{{< tab name="TypeScript" >}}
-```typescript
-const greet = (name: string): string => `Hello, ${name}!`
-```
-{{< /tab >}}
-{{< /tabs >}}
-
----
-
 ## Terminal
 
 {{< terminal title="~/blog" >}}
@@ -281,27 +256,6 @@ The answer is: {{< spoiler >}}42{{< /spoiler >}}
 {{< video id="your-youtube-id" title="Video title" >}}
 
 Replace `your-youtube-id` with the 11-character YouTube video ID.
-
----
-
-## Mermaid
-
-{{< mermaid >}}
-flowchart LR
-    A[Write Markdown] --> B[hugo server]
-    B --> C{Draft?}
-    C -- yes --> D[localhost:1313]
-    C -- no --> E[hugo --minify]
-    E --> F[public/]
-{{< /mermaid >}}
-
----
-
-## Math
-
-{{< math >}}
-\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
-{{< /math >}}
 
 ---
 

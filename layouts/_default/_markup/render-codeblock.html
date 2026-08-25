@@ -1,8 +1,1 @@
-{{- $lang := .Type -}}
-{{- with $lang -}}
-<div class="code-title">
-  <span>{{- . -}}</span>
-  <button class="copy-button">Copy</button>
-</div>
-{{- end -}}
 {{- transform.Highlight .Inner .Type (dict "noClasses" false) -}}

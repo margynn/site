@@ -1,6 +1,0 @@
-.bookmarks .post-item { border-bottom: none; padding: 0.9rem 0; grid-template-columns: 1fr; }
-
-.bookmark-type {
-  color: color-mix(in srgb, var(--foreground) 35%, transparent);
-  font-size: calc(var(--font-size) * 0.85);
-}

@@ -2,7 +2,7 @@
 slug = "2026-08-15"
 date = '2026-08-15'
 draft = true
-tags = ["career", "engineering"]
+tags = ["career"]
 +++
 
 I recently went through a "return to reality" that stung a bit, but one that might turn out to be useful.

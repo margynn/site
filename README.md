@@ -1,6 +1,4 @@
-# Blog
-
-Personal blog built with [Hugo](https://gohugo.io).
+Personal site built with [Hugo](https://gohugo.io).
 
 ## Commands
 
