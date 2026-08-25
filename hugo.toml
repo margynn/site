@@ -34,7 +34,7 @@ siteRepoURL = "https://github.com/margynn/site"
 
 [languages]
 [languages.en]
-title = "Martin"
+title = "Martin Guyard"
 weight = 2
 [languages.en.params]
 [languages.en.params.logo]
@@ -68,7 +68,7 @@ url = "/thoughts"
 weight = 5
 
 [languages.fr]
-title = "Martin"
+title = "Martin Guyard"
 weight = 1
 [languages.fr.params]
 [languages.fr.params.logo]
