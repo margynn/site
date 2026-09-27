@@ -10,11 +10,9 @@ readingTime = true
 
 Quand, comme moi, on vient du monde du developement Web, et que l'on s'interesse progressivement au reseau et aux systèmes distribués et décentralisés, on sort du modèle familier client-serveur pour se diriger vers le paradigme du pair-à-pair (abrégé P2P). Et, en abordant ce paradigme on decouvre une série de problèmes et de contraintes nouvelles que je voudrais partager ici.
 
-{{< imgproc "meme.fr.jpg" Fit  "600x600" center />}}
-
-<!-- {{< collapse title="" >}} -->
-
-<!-- {{< /collapse >}} -->
+{{< collapse title="Un petit meme avant de commencer" >}}
+{{< imgproc "meme.fr.jpg" Fit "600x600" center />}}
+{{< /collapse >}}
 
 ---
 
@@ -69,7 +67,7 @@ Cette addresse est routable dans le reseaux local. Mais pas dans l'Internet publ
 
 En pratique, les paquets peuvent traverser plusieurs NAT sur l'infrastructure du fournisseur avant d'atteindre leur destination. À chaque traduction, la passerelle maintient un mapping entre l'extrémité privée et l'extrémité publique, par exemple :
 
-```
+```txt
 ┌──────────────────┐      ┌─────────────────────┐
 │ 192.168.1.29     │      │      NAT Gateway    │
 │ port 54321       │ ───> │ 82.67.183.248:39142 │ ───>  Destination
