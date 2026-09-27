@@ -102,6 +102,9 @@ other = "Other"
 [open]
 other = "Open"
 
+[tableOfContents]
+other = "Table of Contents"
+
 # Pagination
 [newerPosts]
 other = "Newer"

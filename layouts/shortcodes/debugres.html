@@ -1,0 +1,4 @@
+DEBUG: resources={{ len .Page.Resources }}
+{{ range .Page.Resources }}
+- {{ .Name }} ({{ .ResourceType }})
+{{ end }}

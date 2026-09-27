@@ -12,6 +12,10 @@ term = ["HTML"]
 [markup.goldmark.renderer]
 unsafe = true
 
+[markup.tableOfContents]
+startLevel = 1
+endLevel = 3
+
 [markup.highlight]
 codeFences = true
 lineNos = false

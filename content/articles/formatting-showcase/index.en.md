@@ -195,16 +195,6 @@ Badges inline with text: this feature is {{< badge type="success" >}}stable{{< /
 
 ## Shortcodes
 
-### Line breaks
-
-Use `{{</* linebreak */>}}` to insert explicit `<br>` tags — useful when markdown's implicit line break is not enough.
-
-Before linebreak.
-{{< linebreak 2 >}}
-After two linebreaks.
-
----
-
 ## Terminal
 
 {{< terminal title="~/blog" >}}
