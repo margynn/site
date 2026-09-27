@@ -65,7 +65,7 @@ en0: ...
 
 Cette addresse est routable dans le reseaux local. Mais pas dans l'Internet publique. Lorsque du traffic sortant est émis depuis le réseaux local (eg. se connecter à une page web), le serveur doit connaitre l'address source/d'origine pour répondre. C'est là qu'intervient le **Network Address Translation (NAT)**. Dans le cas classique d'un NAT IPv4, la passerelle du réseau local traduit l'adresse et le port source du paquet pour utiliser son propre couple `{adresse publique; port}`.
 
-En pratique, les paquets peuvent traverser plusieurs NAT sur l'infrastructure du fournisseur avant d'atteindre leur destination. À chaque traduction, la passerelle maintient un mapping entre l'extrémité privée et l'extrémité publique, par exemple :
+En pratique, les paquets peuvent traverser **plusieurs NAT sur l'infrastructure du fournisseur** avant d'atteindre leur destination. À chaque traduction, la passerelle maintient un mapping entre l'extrémité privée et l'extrémité publique, par exemple :
 
 ```txt
 ┌──────────────────┐      ┌─────────────────────┐
@@ -76,9 +76,25 @@ En pratique, les paquets peuvent traverser plusieurs NAT sur l'infrastructure du
 
 Lorsque la réponse revient vers `82.67.183.248:39142`, la passerelle consulte ce mapping et retransmet le paquet vers `192.168.1.29:54321`.
 
+---
+
+<br>
+
 # 3. Le P2P est différent
 
-└── A veut contacter B, mais B n'est pas directement joignable
+NAT est particulièrement pertinent pour IPv4 en raison de l'epuisement du nombre d'addresse publique. Lorsque IPv6 sera totalement deployée il n'y aura plus besoin de NAT, les réseaux privés continueront d'exister car l'isolation réseaux est toujours souhaitable.
+
+Dans le modèle client-serveur, le NAT ne pose pas vraiment de soucis car le serveur est publiquement routable. C'est à dire que son addresse est accessible sur l'Internet publique. Une fois que la connection est initiée par le client (eg. un équipement du réseau privé/local) le serveur peut répondre et le NAT effectuer la traduction.
+
+Dans le modèle P2P, la traversée du NAT pose problème dans le cas où les deux participants sont chacun derrière un NAT. En effet, aucun des deux ne peut simplement initier une connexion entrante vers l'autre comme il le ferait avec un serveur publiquement adressable. Il y a alors deux barrières :
+
+- Le parefeux de la passerelle bloque les paquets entrants.
+- La passerelle ignore vers quel equipement du reseaux local rediriger les paquets entrants.
+
+<!-- TODO: image du schéma NAT/P2P -->
+
+
+Chaque tentative échoue pour la même raison : un NAT ne laisse entrer un paquet que s'il correspond à une entrée déjà présente dans sa table de mapping, et cette table n'est alimentée que par le **trafic sortant** de son propre réseau. Quand Peer A envoie vers Peer B, ce paquet sort sans problème de NAT A — mais en arrivant sur NAT B, aucune entrée sortante ne le justifie, donc il est rejeté. C'est symétrique dans l'autre sens. Résultat : même si chacun connaissait l'adresse publique de l'autre, aucun des deux ne peut initier de connexion en premier, car son paquet sera systématiquement bloqué par le NAT distant.
 
 # 4. Découvrir son adresse publique avec STUN
 

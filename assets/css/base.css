@@ -150,6 +150,7 @@ pre {
   border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
 }
 
+
 sup { position: relative; line-height: 0; top: -0.25em; }
 sub { position: relative; bottom: -0.25em; }
 
