@@ -273,6 +273,21 @@ Cette adresse dépend-elle de la destination contactée ? Pour la plupart des NA
 
 # 5. Percement de NAT
 
+Si on résume le pièces assemblées:
+
+- Le NAT traduit l'origine des paquets du reseau privé et rejette les paquets entrants qui ne correspondent à aucun mappage.
+- STUN permet d'obtenir l'addresse et port publique du dernier NAT emprunté.
+
+On peut donc esquissé le protocole suivant pour tenter de percer les NAT et permettre a deux pairs, chacun derrière un NAT (donc non addressable) de pouvoir communiquer:
+
+1. Chaque pair résout sont addressage publique avec STUN via UDP.
+   Ce faisant, chaque NAT va enregistrer un mapping _privé<->publique_
+2. Chaque pair échange son addressage publique avec l'autre.
+   Le mecanisme importe peu, serveur de rdv ou autre.
+3. Sur la meme **connection** UDP que pour contacter le serveur STUN, les pairs
+   envoie des paquets vers l'addresse publique de l'autre
+4. Profit ??
+
 ├── principe
 ├── échange des endpoints
 └── établissement du chemin direct
