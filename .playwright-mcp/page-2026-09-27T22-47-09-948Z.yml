@@ -1,0 +1,232 @@
+- generic [ref=f11e2]:
+  - banner [ref=f11e3]:
+    - generic [ref=f11e4]:
+      - link "~/" [ref=f11e5] [cursor=pointer]:
+        - /url: /fr/
+      - navigation [ref=f11e7]:
+        - link "Articles" [ref=f11e8] [cursor=pointer]:
+          - /url: /fr/articles
+        - link "Projets" [ref=f11e9] [cursor=pointer]:
+          - /url: /fr/projects
+        - link "Favoris" [ref=f11e10] [cursor=pointer]:
+          - /url: /fr/bookmarks
+        - link "Lectures" [ref=f11e11] [cursor=pointer]:
+          - /url: /fr/reading
+        - link "Traces" [ref=f11e12] [cursor=pointer]:
+          - /url: /fr/thoughts
+      - generic [ref=f11e13]:
+        - generic [ref=f11e14]:
+          - generic [ref=f11e15]: FR
+          - generic [ref=f11e16]: "|"
+          - link "EN" [ref=f11e17] [cursor=pointer]:
+            - /url: http://localhost:1313/
+        - button "Switch theme" [ref=f11e18] [cursor=pointer]
+  - article [ref=f11e23]:
+    - heading [level=1] [ref=f11e24]:
+      - 'link "P2P: Trouver une porte dans le mur" [ref=f11e25] [cursor=pointer]':
+        - /url: http://localhost:1313/fr/articles/nat-traversal/
+    - generic [ref=f11e26]:
+      - generic [ref=f11e27]:
+        - time [ref=f11e28]: 27 sept. 2026
+        - text: ":: 9 min de lecture (1877 mots)"
+      - generic [ref=f11e29]:
+        - link "P2P" [ref=f11e30] [cursor=pointer]:
+          - /url: /fr/tags/p2p/
+        - link "Réseau" [ref=f11e31] [cursor=pointer]:
+          - /url: /fr/tags/r%C3%A9seau/
+        - link "Go" [ref=f11e32] [cursor=pointer]:
+          - /url: /fr/tags/go/
+    - group [ref=f11e33]:
+      - generic "▶ Sommaire" [ref=f11e34] [cursor=pointer]
+    - generic [ref=f11e36]:
+      - paragraph [ref=f11e37]: Quand, comme moi, on vient du monde du développement Web, et que l’on s’intéresse progressivement au réseau et aux systèmes distribués et décentralisés, on sort du modèle familier client-serveur pour se diriger vers le paradigme du pair-à-pair (abrégé P2P). Et, en abordant ce paradigme on découvre une série de problèmes et de contraintes nouvelles que je voudrais partager ici.
+      - group [ref=f11e38]:
+        - generic "▶ Dileme lors de la configuration de mon router domestique" [ref=f11e39] [cursor=pointer]
+      - separator [ref=f11e40]
+      - heading "1. Client-serveur vs P2P" [level=1] [ref=f11e41]
+      - paragraph [ref=f11e42]:
+        - text: La différence entre le paradigme client-serveur et P2P est plus une
+        - strong [ref=f11e43]: distinction topologique que technique
+        - text: . On peut généralement utiliser, dans les deux cas, les mêmes protocoles réseau et la même infrastructure. Le bon modèle mental est qu’il s’agit d’une topologie pour les applications sur Internet.
+      - paragraph [ref=f11e44]: "Le modèle client-serveur est centralisé. Il suppose deux familles de participants : les clients, qui initient généralement les connexions avec les serveurs, et les serveurs, qui répondent aux communications des clients. Les clients peuvent communiquer entre eux, mais leurs communications sont généralement relayées par le serveur. C’est le modèle le plus répandu sur le Web. Quand un utilisateur ouvre une page Web avec son navigateur, il agit comme un client, qui ouvre une connexion avec un serveur (en l’occurrence le site Web). S’il communique avec d’autres clients, les communications sont généralement relayées par le serveur (par exemple dans des messageries Web comme Discord, WhatsApp ou Slack)."
+      - paragraph [ref=f11e45]: "À l’inverse, le P2P est un modèle dans lequel les participants sont des pairs. Chaque pair peut à la fois agir comme client et comme serveur : il peut initier une connexion et accepter des connexions provenant d’autres pairs. C’est particulièrement répandu dans des applications comme les systèmes distribués, les blockchains, BitTorrent ou WebRTC."
+      - separator [ref=f11e46]
+      - heading "2. Le problème des réseaux privés" [level=1] [ref=f11e47]
+      - paragraph [ref=f11e48]: "“Internet est un réseau de réseaux”, et la plupart des utilisateurs se trouvent dans des réseaux privés (eg. réseaux domestique, d’entreprise, LAN, VPN etc…), c’est à dire non-adressable depuis l’Internet public. Je vois deux raisons principales à cela, une sécuritaire et une technique/historique:"
+      - heading "Sécurité et isolation" [level=2] [ref=f11e49]
+      - paragraph [ref=f11e50]: "L’isolation d’équipements dans des réseaux privés permet d’éviter le trafic entrant, même sans configuration explicite de pare-feu. Par définition, les équipements d’un réseau privé ne sont pas adressables depuis l’Internet public. C’est souhaitable: le jour où mon grille pain connecté accepte une connexion depuis Pékin, je considère que l’architecture réseau a échoué."
+      - heading "Épuisement des adresses IPv4" [level=2] [ref=f11e51]
+      - paragraph [ref=f11e52]:
+        - text: L’Internet Protocol, est le protocole au coeur du routage des données sur Internet. IPv4, version du protocole IP le plus déployé, a été formalisé en 1981 dans la
+        - link [ref=f11e53] [cursor=pointer]:
+          - /url: https://www.rfc-editor.org/info/rfc791
+          - strong [ref=f11e54]: RFC 791
+        - text: .
+      - paragraph [ref=f11e55]:
+        - text: Une adresse IPv4 est encodée sur 32 bits, ça représente une plage de
+        - code [ref=f11e56]: 1<<32 = 4_294_967_296
+        - text: adresses. C’est-à-dire environ 4 Milliards d’adresses IPv4 routables sur l’Internet public. C’est insuffisant pour attribuer une adresse IPv4 unique à chaque équipement connecté à Internet.
+      - alert [ref=f11e57]:
+        - generic [ref=f11e58]:
+          - text: IPv6 résout ce problème en utilisant des adresses de 128 bits, soit
+          - code [ref=f11e59]: 1<<128 ≈ 3,4×10^38
+          - text: adresses possibles. Mais le déploiement d’IPv6 étant progressif, IPv4 reste largement utilisé.
+      - paragraph [ref=f11e60]:
+        - text: La solution à l’épuisement d’adresse IPv4 est décrite dans
+        - link [ref=f11e61] [cursor=pointer]:
+          - /url: https://www.rfc-editor.org/info/rfc1918
+          - strong [ref=f11e62]: RFC 1918
+        - text: "et consiste à réutiliser des adresses IPv4 dans des réseaux privés sans se soucier de leur unicité à l’échelle mondiale. En particulier trois plages sont réservées à cet usage:"
+      - list [ref=f11e63]:
+        - listitem [ref=f11e64]:
+          - text: "-"
+          - code [ref=f11e65]: 10.0.0.0/8
+        - listitem [ref=f11e66]:
+          - text: "-"
+          - code [ref=f11e67]: 172.16.0.0/12
+        - listitem [ref=f11e68]:
+          - text: "-"
+          - code [ref=f11e69]: 192.168.0.0/16
+      - paragraph [ref=f11e70]:
+        - text: Toutes les adresses qui appartiennent à ces plages n’ont aucune signification à l’échelle globale, elles ne sont pas routées sur l’Internet public. En conséquence, deux équipements sur des réseaux privés distincts peuvent avoir la même adresse locale.
+        - code [ref=f11e71]: ifconfig
+        - text: permet de découvrir l’adresse locale de sa machine, ici sur l’interface
+        - code [ref=f11e72]: en0
+        - text: "de ma machine:"
+      - code [ref=f11e75]:
+        - generic [ref=f11e76]: $ ifconfig
+        - generic [ref=f11e78]: "en0: ..."
+        - generic [ref=f11e80]: inet 192.168.1.29 netmask 0xffffff00 broadcast 192.168.1.255
+      - paragraph [ref=f11e82]: Cette adresse est routable dans le réseau local. Mais pas dans l’Internet public. Lorsque du trafic sortant est émis depuis le réseau local (eg. se connecter à un site web), le serveur doit connaitre l’adresse source/d’origine pour répondre.
+      - paragraph [ref=f11e83]:
+        - text: C’est là qu’intervient le
+        - strong [ref=f11e84]: Network Address Translation (NAT)
+        - text: . Dans le cas classique d’un NAT IPv4, la passerelle du réseau local traduit l’adresse et le port source du paquet pour utiliser son propre couple
+        - emphasis [ref=f11e85]: (IP publique ; port publique)
+        - text: . Le port publique choisi pour la traduction dépend du NAT, en principe on ne peut pas vraiment le deviner à l’avance
+      - paragraph [ref=f11e86]:
+        - text: En pratique, les paquets peuvent traverser
+        - strong [ref=f11e87]: plusieurs NAT sur l’infrastructure du fournisseur
+        - text: "avant d’atteindre leur destination. À chaque fois qu’une connexion sortante est initiée, la passerelle maintient un mappage entre l’extrémité privée et l’extrémité publique. Chaque paquet envoyé sur cette connexion voit son origine/source traduite à la volée par le NAT. Par exemple :"
+      - code [ref=f11e90]:
+        - generic [ref=f11e91]: ┌──────────────────┐ ┌─────────────────────┐
+        - generic [ref=f11e93]: │ 192.168.1.29 │ │ NAT Gateway │
+        - generic [ref=f11e95]: │ port 54321 │ ───> │ 82.67.183.248:39142 │ ───> Destination
+        - generic [ref=f11e97]: └──────────────────┘ └─────────────────────┘
+      - paragraph [ref=f11e99]:
+        - text: Lorsque la réponse revient vers
+        - code [ref=f11e100]: 82.67.183.248:39142
+        - text: ", la passerelle consulte ce mappage et retransmet le paquet vers"
+        - code [ref=f11e101]: 192.168.1.29:54321
+        - text: .
+      - separator [ref=f11e102]
+      - heading "3. Le P2P est différent" [level=1] [ref=f11e103]
+      - paragraph [ref=f11e104]:
+        - text: "Dans le modèle client-serveur, le NAT ne pose pas de soucis car le serveur est publiquement routable : il est accessible sur l’Internet public. Une fois que la connexion est initiée par le client (eg. un équipement du réseau privé/local) le NAT enregistre le mappage"
+        - emphasis [ref=f11e105]: (IP privée ; port privée)
+        - text: <->
+        - emphasis [ref=f11e106]: (IP publique ; port publique)
+        - text: ", le serveur peut ensuite répondre et le NAT effectuer la traduction et transmettre à l’équipement associé du réseau privé."
+      - paragraph [ref=f11e107]:
+        - text: Dans le modèle P2P, le NAT pose problème dans le cas où les deux pairs sont chacun derrière un NAT. Aucun des pairs n’est directement accessible car aucun des NAT ne contient le mappage
+        - emphasis [ref=f11e108]: (IP privée ; port privée)
+        - text: <->
+        - emphasis [ref=f11e109]: (IP publique ; port publique)
+        - text: .
+      - paragraph [ref=f11e110]:
+        - text: D’ailleurs les pairs eux-mêmes ne connaissent pas leur
+        - emphasis [ref=f11e111]: (IP publique ; port publique)
+        - text: ": cette information est maintenue par leur NAT respectif. Aucun des deux ne peut donc simplement initier une connexion vers l’autre comme il le ferait avec un serveur publiquement adressable."
+      - code [ref=f11e114]:
+        - generic [ref=f11e115]: Pair A Pair B
+        - generic [ref=f11e117]: 192.168.1.10:51000 192.168.2.20:52000
+        - generic [ref=f11e119]: │ │
+        - generic [ref=f11e121]: │ │
+        - generic [ref=f11e123]: │ Adresse publique ? │
+        - generic [ref=f11e125]: │ │
+        - generic [ref=f11e127]: │ ─────── impossible ─────── │
+        - generic [ref=f11e129]: │ │
+        - generic [ref=f11e131]: NAT A NAT B
+        - generic [ref=f11e133]: │ │
+        - generic [ref=f11e135]: └────────────── INTERNET ────────────────┘
+      - separator [ref=f11e137]
+      - heading "4. Découvrir son adresse publique avec STUN" [level=1] [ref=f11e138]
+      - paragraph [ref=f11e139]:
+        - text: La première étape pour tenter de traverser le NAT c’est de connaitre la résolution
+        - emphasis [ref=f11e140]: (IP publique ; port publique)
+        - text: effectuée par le NAT. Cette information est nécessaire pour le pair distant pour router ses paquets. La
+        - link [ref=f11e141] [cursor=pointer]:
+          - /url: https://www.rfc-editor.org/info/rfc8489/
+          - strong [ref=f11e142]: RFC 8489
+        - text: "définit une suite d’outils pour traverser un NAT. L’abstract indique :"
+      - blockquote [ref=f11e143]:
+        - paragraph [ref=f11e144]: “Session Traversal Utilities for NAT (STUN) is a protocol that serves as a tool for other protocols in dealing with NAT traversal. It can be used by an endpoint to determine the IP address and port allocated to it by a NAT. "
+      - paragraph [ref=f11e145]:
+        - text: "Cette RFC définit une seule méthode:"
+        - code [ref=f11e146]: Binding
+        - text: "(le champ “type de message” du header encode aussi une classe : requête, succès, erreur ou indication, mais un seul type d’échange nous intéresse ici : la requête"
+        - code [ref=f11e147]: Binding
+        - text: et sa réponse). Ce qui nous intéresse pour la résolution
+        - emphasis [ref=f11e148]: (IP publique ; port publique)
+        - text: du NAT c’est de décoder l’attribut
+        - code [ref=f11e149]: XOR-MAPPED-ADDRESS
+        - text: de la réponse. Cet attribut contient l’adresse publique du client telle que vue par le serveur STUN, c’est à dire après traduction par le dernier NAT traversé.
+      - group [ref=f11e150]:
+        - generic "▶ Format binaire des messages STUN" [ref=f11e151] [cursor=pointer]
+      - paragraph [ref=f11e152]:
+        - text: "Une bonne nouvelle c’est que Google met gratuitement à disposition des serveurs STUN pour les projets WebRTC. Par exemple:"
+        - code [ref=f11e153]: stun.l.google.com:19302
+        - text: .
+      - group [ref=f11e154]:
+        - generic "▶ Example Go" [ref=f11e155] [cursor=pointer]
+      - paragraph [ref=f11e156]: "En relançant l’exécution plusieurs fois de suite on voit que l’IP reste fixe mais le port change :"
+      - code [ref=f11e159]:
+        - generic [ref=f11e160]: $ go run .
+        - generic [ref=f11e162]: "2026/09/27 23:38:53 NAT: 82.67.x.x:55945"
+        - generic [ref=f11e165]: $ go run .
+        - generic [ref=f11e167]: "2026/09/27 23:41:21 NAT: 82.67.x.x:57853"
+        - generic [ref=f11e170]: $ go run .
+        - generic [ref=f11e172]: "2026/09/27 23:41:23 NAT: 82.67.x.x:55655"
+      - paragraph [ref=f11e174]: Dans mon cas particulier j’ai une IP fixe auprès de mon FAI, ce qui explique qu’elle ne varie pas d’un run à l’autre ; le port, lui, change car c’est le NAT qui choisit dynamiquement la traduction à chaque nouvelle connexion initiée par le programme Go.
+      - alert [ref=f11e175]:
+        - generic [ref=f11e176]:
+          - text: Cette adresse dépend-elle de la destination contactée ? Pour la plupart des NAT non, le mapping ne dépend que de
+          - emphasis [ref=f11e177]: (IP privée ; port privée)
+          - text: . Mais certains NAT (dits
+          - strong [ref=f11e178]: symétriques
+          - text: ") attribuent une traduction différente par destination : l’adresse vue par le pair serait alors différente. J’y reviens en partie 6."
+      - separator [ref=f11e179]
+      - heading "5. UDP hole punching" [level=1] [ref=f11e180]
+      - paragraph [ref=f11e181]: ├── principe ├── échange des endpoints └── établissement du chemin direct
+      - paragraph [ref=f11e182]:
+        - text: "Chaque tentative échoue pour la même raison : un NAT ne laisse entrer un paquet que s’il correspond à une entrée déjà présente dans sa table de mappage, et cette table n’est alimentée que par le"
+        - strong [ref=f11e183]: trafic sortant
+        - text: de son propre réseau. Quand
+        - code [ref=f11e184]: Peer A
+        - text: envoie vers
+        - code [ref=f11e185]: Peer B
+        - text: ", ce paquet sort sans problème de"
+        - code [ref=f11e186]: NAT A
+        - text: ", mais en arrivant sur"
+        - code [ref=f11e187]: NAT B
+        - text: ", aucune entrée sortante ne correspond, il est alors rejeté (même sans tenir compte du réglage du pare-feu). Cette situation est symétrique pour"
+        - code [ref=f11e188]: Peer B
+        - text: qui envoie vers
+        - code [ref=f11e189]: Peer A
+        - text: .
+      - alert [ref=f11e190]:
+        - generic [ref=f11e191]: "Résultat : même en connaissant l’adresse publique de l’autre, aucun des deux ne peut initier de connexion en premier, car son paquet sera bloqué par le NAT distant."
+      - heading "6. Limites" [level=1] [ref=f11e192]
+      - paragraph [ref=f11e193]: ├── types de NAT ├── firewalls └── cas où le punching échoue
+      - heading "8. Implémentation Go" [level=1] [ref=f11e194]
+  - contentinfo [ref=f11e195]:
+    - generic [ref=f11e196]:
+      - text: 2026 · Martin Guyard ·
+      - link "GitHub" [ref=f11e197] [cursor=pointer]:
+        - /url: https://github.com/margynn
+      - text: ·
+      - link "LinkedIn" [ref=f11e198] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/martin-g-105b74150/
+      - text: ·
+      - link "site" [ref=f11e199] [cursor=pointer]:
+        - /url: https://github.com/margynn/site

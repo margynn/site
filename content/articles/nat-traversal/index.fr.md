@@ -10,7 +10,7 @@ readingTime = true
 
 Quand, comme moi, on vient du monde du développement Web, et que l'on s'intéresse progressivement au réseau et aux systèmes distribués et décentralisés, on sort du modèle familier client-serveur pour se diriger vers le paradigme du pair-à-pair (abrégé P2P). Et, en abordant ce paradigme on découvre une série de problèmes et de contraintes nouvelles que je voudrais partager ici.
 
-{{< collapse title="Un petit meme avant de commencer" >}}
+{{< collapse title="Dileme lors de la configuration de mon router domestique" >}}
 {{< imgproc "meme.fr.jpg" Fit "600x600" center />}}
 {{< /collapse >}}
 
@@ -65,7 +65,7 @@ en0: ...
 
 Cette adresse est routable dans le réseau local. Mais pas dans l'Internet public. Lorsque du trafic sortant est émis depuis le réseau local (eg. se connecter à un site web), le serveur doit connaitre l'adresse source/d'origine pour répondre.
 
-C'est là qu'intervient le **Network Address Translation (NAT)**. Dans le cas classique d'un NAT IPv4, la passerelle du réseau local traduit l'adresse et le port source du paquet pour utiliser son propre couple (IP publique ; port publique). Le port publique choisi pour la traduction dépend du NAT, en principe on ne peut pas vraiment le deviner à l'avance
+C'est là qu'intervient le **Network Address Translation (NAT)**. Dans le cas classique d'un NAT IPv4, la passerelle du réseau local traduit l'adresse et le port source du paquet pour utiliser son propre couple _(IP publique ; port publique)_. Le port publique choisi pour la traduction dépend du NAT, en principe on ne peut pas vraiment le deviner à l'avance
 
 En pratique, les paquets peuvent traverser **plusieurs NAT sur l'infrastructure du fournisseur** avant d'atteindre leur destination. À chaque fois qu'une connexion sortante est initiée, la passerelle maintient un mappage entre l'extrémité privée et l'extrémité publique. Chaque paquet envoyé sur cette connexion voit son origine/source traduite à la volée par le NAT. Par exemple :
 
@@ -84,24 +84,24 @@ Lorsque la réponse revient vers `82.67.183.248:39142`, la passerelle consulte c
 
 # 3. Le P2P est différent
 
-Dans le modèle client-serveur, le NAT ne pose pas de soucis car le serveur est publiquement routable : il est accessible sur l'Internet public. Une fois que la connexion est initiée par le client (eg. un équipement du réseau privé/local) le NAT enregistre le mappage (IP privée ; port privée) <-> (IP publique ; port publique), le serveur peut ensuite répondre et le NAT effectuer la traduction et transmettre à l'équipement associé du réseau privé.
+Dans le modèle client-serveur, le NAT ne pose pas de soucis car le serveur est publiquement routable : il est accessible sur l'Internet public. Une fois que la connexion est initiée par le client (eg. un équipement du réseau privé/local) le NAT enregistre le mappage _(IP privée ; port privée)_ <-> _(IP publique ; port publique)_, le serveur peut ensuite répondre et le NAT effectuer la traduction et transmettre à l'équipement associé du réseau privé.
 
-Dans le modèle P2P, le NAT pose problème dans le cas où les deux pairs sont chacun derrière un NAT. Aucun des pairs n'est directement accessible car aucun des NAT ne contient le mappage (IP privée ; port privée) <-> (IP publique ; port publique).
+Dans le modèle P2P, le NAT pose problème dans le cas où les deux pairs sont chacun derrière un NAT. Aucun des pairs n'est directement accessible car aucun des NAT ne contient le mappage _(IP privée ; port privée)_ <-> _(IP publique ; port publique)_.
 
-D'ailleurs les pairs eux-mêmes ne connaissent pas leur (IP publique ; port publique) : cette information est maintenue par leur NAT respectif. Aucun des deux ne peut donc simplement initier une connexion vers l'autre comme il le ferait avec un serveur publiquement adressable.
+D'ailleurs les pairs eux-mêmes ne connaissent pas leur _(IP publique ; port publique)_ : cette information est maintenue par leur NAT respectif. Aucun des deux ne peut donc simplement initier une connexion vers l'autre comme il le ferait avec un serveur publiquement adressable.
 
 ```txt
-        Pair A                                   Pair B
-   192.168.1.10:51000                      192.168.2.20:52000
-          │                                        │
-          │                                        │
-          │           Adresse publique ?           │
-          │                                        │
-          │       ─────── impossible ───────       │
-          │                                        │
-       NAT A                                    NAT B
-          │                                        │
-          └────────────── INTERNET ────────────────┘
+					Pair A                                   Pair B
+			192.168.1.10:51000                      192.168.2.20:52000
+					│                                        │
+					│                                        │
+					│           Adresse publique ?           │
+					│                                        │
+					│       ─────── impossible ───────       │
+					│                                        │
+				NAT A                                    NAT B
+					│                                        │
+					└────────────── INTERNET ────────────────┘
 ```
 
 ---
@@ -110,14 +110,14 @@ D'ailleurs les pairs eux-mêmes ne connaissent pas leur (IP publique ; port publ
 
 # 4. Découvrir son adresse publique avec STUN
 
-La première étape pour tenter de traverser le NAT c'est de connaitre la résolution (IP publique ; port publique) effectuée par le NAT. Cette information est nécessaire pour le pair distant pour router ses paquets. La [**RFC 8489**](https://www.rfc-editor.org/info/rfc8489/) définit une suite d'outils pour traverser un NAT. L'abstract indique :
+La première étape pour tenter de traverser le NAT c'est de connaitre la résolution _(IP publique ; port publique)_ effectuée par le NAT. Cette information est nécessaire pour le pair distant pour router ses paquets. La [**RFC 8489**](https://www.rfc-editor.org/info/rfc8489/) définit une suite d'outils pour traverser un NAT. L'abstract indique :
 
 > "Session Traversal Utilities for NAT (STUN) is a protocol that serves
 > as a tool for other protocols in dealing with NAT traversal. It can
 > be used by an endpoint to determine the IP address and port allocated
 > to it by a NAT. "
 
-Cette RFC définit une seule méthode: `Binding` (le champ "type de message" du header encode aussi une classe : requête, succès, erreur ou indication, mais un seul type d'échange nous intéresse ici : la requête `Binding` et sa réponse). Ce qui nous intéresse pour la résolution (IP publique ; port publique) du NAT c'est de décoder l'attribut `XOR-MAPPED-ADDRESS` de la réponse. Cet attribut contient l'adresse publique du client telle que vue par le serveur STUN, c'est à dire après traduction par le dernier NAT traversé.
+Cette RFC définit une seule méthode: `Binding` (le champ "type de message" du header encode aussi une classe : requête, succès, erreur ou indication, mais un seul type d'échange nous intéresse ici : la requête `Binding` et sa réponse). Ce qui nous intéresse pour la résolution _(IP publique ; port publique)_ du NAT c'est de décoder l'attribut `XOR-MAPPED-ADDRESS` de la réponse. Cet attribut contient l'adresse publique du client telle que vue par le serveur STUN, c'est à dire après traduction par le dernier NAT traversé.
 
 {{< collapse title="Format binaire des messages STUN" >}}
 
@@ -264,8 +264,12 @@ $ go run .
 Dans mon cas particulier j'ai une IP fixe auprès de mon FAI, ce qui explique qu'elle ne varie pas d'un run à l'autre ; le port, lui, change car c'est le NAT qui choisit dynamiquement la traduction à chaque nouvelle connexion initiée par le programme Go.
 
 {{< alert type="warning" >}}
-Cette adresse dépend-elle de la destination contactée ? Pour la plupart des NAT non, le mapping ne dépend que de (IP privée ; port privée). Mais certains NAT (dits **symétriques**) attribuent une traduction différente par destination : l'adresse vue par le pair serait alors différente. J'y reviens en partie 6.
+Cette adresse dépend-elle de la destination contactée ? Pour la plupart des NAT non, le mapping ne dépend que de _(IP privée ; port privée)_. Mais certains NAT (dits **symétriques**) attribuent une traduction différente par destination : l'adresse vue par le pair serait alors différente. J'y reviens en partie 6.
 {{< /alert >}}
+
+---
+
+<br>
 
 # 5. UDP hole punching
 
