@@ -10,7 +10,11 @@ readingTime = true
 
 Quand, comme moi, on vient du monde du developement Web, et que l'on s'interesse progressivement au reseau et aux systèmes distribués et décentralisés, on sort du modèle familier client-serveur pour se diriger vers le paradigme du pair-à-pair (abrégé P2P). Et, en abordant ce paradigme on decouvre une série de problèmes et de contraintes nouvelles que je voudrais partager ici.
 
-{{< debugres >}}
+{{< imgproc "meme.fr.jpg" Fit  "600x600" center />}}
+
+<!-- {{< collapse title="" >}} -->
+
+<!-- {{< /collapse >}} -->
 
 ---
 
@@ -61,55 +65,35 @@ en0: ...
 	inet 192.168.1.29 netmask 0xffffff00 broadcast 192.168.1.255
 ```
 
-Cette addresse est routable/atteignable dans le reseaux local. Mais pas dans l'Internet publique. Lorsque du traffic sortant est émis depuis le réseaux local (eg. se connecter à une page web), le router fait
+Cette addresse est routable dans le reseaux local. Mais pas dans l'Internet publique. Lorsque du traffic sortant est émis depuis le réseaux local (eg. se connecter à une page web), le serveur doit connaitre l'address source/d'origine pour répondre. C'est là qu'intervient le **Network Address Translation (NAT)**. Dans le cas classique d'un NAT IPv4, la passerelle du réseau local traduit l'adresse et le port source du paquet pour utiliser son propre couple `{adresse publique; port}`.
+
+En pratique, les paquets peuvent traverser plusieurs NAT sur l'infrastructure du fournisseur avant d'atteindre leur destination. À chaque traduction, la passerelle maintient un mapping entre l'extrémité privée et l'extrémité publique, par exemple :
+
+```
+┌──────────────────┐      ┌─────────────────────┐
+│ 192.168.1.29     │      │      NAT Gateway    │
+│ port 54321       │ ───> │ 82.67.183.248:39142 │ ───>  Destination
+└──────────────────┘      └─────────────────────┘
+```
+
+Lorsque la réponse revient vers `82.67.183.248:39142`, la passerelle consulte ce mapping et retransmet le paquet vers `192.168.1.29:54321`.
 
 # 3. Le P2P est différent
+
+└── A veut contacter B, mais B n'est pas directement joignable
 
 # 4. Découvrir son adresse publique avec STUN
 
 # 5. UDP hole punching
 
+├── principe
+├── échange des endpoints
+└── établissement du chemin direct
+
 # 6. Limites
 
+├── types de NAT
+├── firewalls
+└── cas où le punching échoue
+
 # 8. Implémentation Go
-
----
-
-sujet:
-Nat, udp/tcp, ipv4/ipv6
-
-```txt
-
-Two Buttons
-« Autoriser tout le trafic entrant » / « Rester derrière le NAT »
-
-
-1. Client-serveur vs P2P
-   └── distinction topologique
-
-2. Le problème des réseaux privés
-   ├── NAT
-   ├── firewall
-   └── pourquoi client-serveur fonctionne naturellement
-
-3. Pourquoi le P2P est différent
-   └── A veut contacter B, mais B n'est pas directement joignable
-
-4. Découvrir son adresse publique avec STUN
-
-5. UDP hole punching
-   ├── principe
-   ├── échange des endpoints
-   └── établissement du chemin direct
-
-6. Limites
-   ├── types de NAT
-   ├── firewalls
-   └── cas où le punching échoue
-
-7. TURN : le fallback
-   └── relayer le trafic quand le P2P direct est impossible
-
-8. Implémentation Go
-   └── petite démo concrète
-```
