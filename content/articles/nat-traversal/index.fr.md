@@ -22,9 +22,9 @@ Quand, comme moi, on vient du monde du developement Web, et que l'on s'interesse
 
 La différence entre le paradigme client-serveur et P2P est plus une **distinction topologique que technique**. On peut généralement utiliser, dans les deux cas, les mêmes protocoles réseau et la même infrastructure. Le bon modèle mental est qu'il s'agit d'une topologie pour les applications sur Internet.
 
-Le modèle client-serveur est centralisé. Il suppose deux familles de pairs : les clients, qui initient généralement les connexions avec les serveurs, et les serveurs, qui répondent aux communications des clients. Les clients peuvent communiquer entre eux, mais leurs communications sont généralement relayées par le serveur. C'est le modèle le plus répandu sur le Web. Quand un utilisateur ouvre une page Web avec son navigateur, il agit comme un client, qui ouvre une connexion avec un serveur (en l'occurrence le site Web). S'il communique avec d'autres clients, les communications sont généralement relayées par le serveur (par exemple dans des messageries Web comme Discord, WhatsApp ou Slack).
+Le modèle client-serveur est centralisé. Il suppose deux familles de participants : les clients, qui initient généralement les connexions avec les serveurs, et les serveurs, qui répondent aux communications des clients. Les clients peuvent communiquer entre eux, mais leurs communications sont généralement relayées par le serveur. C'est le modèle le plus répandu sur le Web. Quand un utilisateur ouvre une page Web avec son navigateur, il agit comme un client, qui ouvre une connexion avec un serveur (en l'occurrence le site Web). S'il communique avec d'autres clients, les communications sont généralement relayées par le serveur (par exemple dans des messageries Web comme Discord, WhatsApp ou Slack).
 
-À l'inverse, le P2P est un modèle dans lequel les pairs sont des pairs. Chaque pair peut à la fois agir comme client et comme serveur : il peut initier une connexion et accepter des connexions provenant d'autres pairs. C'est particulièrement répandu dans des applications comme les systèmes distribués, les blockchains, BitTorrent ou WebRTC.
+À l'inverse, le P2P est un modèle dans lequel les participants sont des pairs. Chaque pair peut à la fois agir comme client et comme serveur : il peut initier une connexion et accepter des connexions provenant d'autres pairs. C'est particulièrement répandu dans des applications comme les systèmes distribués, les blockchains, BitTorrent ou WebRTC.
 
 ---
 
@@ -37,11 +37,11 @@ Je vois deux raisons principales a cela, une securitaire et une technique/histor
 
 ## Sécurité et isolation
 
-L'isolation d'équipements dans des reseaux privés permet d'eviter le traffic entrant, même sans configuration explicite de parefeux. Par définition, les equipements d'un réseaux privé ne sont pas addressable depuis l'Internet publique. C'est souhaitable: le jour où mon grille pain connecté recoit une connection TCP depuis Pékin, je considère que l'architecture réseau a échoué.
+L'isolation d'équipements dans des reseaux privés permet d'eviter le traffic entrant, même sans configuration explicite de parefeux. Par définition, les equipements d'un réseaux privé ne sont pas addressable depuis l'Internet publique. C'est souhaitable: le jour où mon grille pain connecté accepte une connection depuis Pékin, je considère que l'architecture réseau a échoué.
 
 ## Épuisement des addresses IPv4
 
-L'Internet Protocol, est le protocole au coeur du routage des données sur Internet. IPv4, version du protocol IP le plus deployé, a été formalisé en 1981 dans la [**RFC-791**](https://www.rfc-editor.org/info/rfc791).
+L'Internet Protocol, est le protocole au coeur du routage des données sur Internet. IPv4, version du protocol IP le plus deployé, a été formalisé en 1981 dans la [**RFC 791**](https://www.rfc-editor.org/info/rfc791).
 
 Une addresse IPv4 est encodé sur 32 bits, ça représente une plage de `1<<32 = 4_294_967_296` addresses. C'est-à-dire environ 4 Milliards d'addresses IPv4 routable sur l'Internet publique. C'est insufisant pour attribuer une addresse IPv4 unique a chaque équipement connecté à Internet.
 
@@ -49,7 +49,7 @@ Une addresse IPv4 est encodé sur 32 bits, ça représente une plage de `1<<32 =
 IPv6 résout ce problème en utilisant des adresses de 128 bits, soit `1<<128 ≈ 3,4×10^38` adresses possibles. Mais le déploiement d'IPv6 étant progressif, IPv4 reste largement utilisé.
 {{< /alert >}}
 
-La solution à l'épuisement d'addresse IPv4 est décrite dans [**RFC-1918**](https://www.rfc-editor.org/info/rfc1918) et consiste à reutiliser des addresses IPv4 dans des reseaux privés sans se soucier de leur unicité à l'échelle mondiale. En particulier trois plages sont réservées à cet usage:
+La solution à l'épuisement d'addresse IPv4 est décrite dans [**RFC 1918**](https://www.rfc-editor.org/info/rfc1918) et consiste à reutiliser des addresses IPv4 dans des reseaux privés sans se soucier de leur unicité à l'échelle mondiale. En particulier trois plages sont réservées à cet usage:
 
 - `10.0.0.0/8`
 - `172.16.0.0/12`
@@ -63,9 +63,11 @@ en0: ...
 	inet 192.168.1.29 netmask 0xffffff00 broadcast 192.168.1.255
 ```
 
-Cette addresse est routable dans le reseaux local. Mais pas dans l'Internet publique. Lorsque du traffic sortant est émis depuis le réseaux local (eg. se connecter à une page web), le serveur doit connaitre l'address source/d'origine pour répondre. C'est là qu'intervient le **Network Address Translation (NAT)**. Dans le cas classique d'un NAT IPv4, la passerelle du réseau local traduit l'adresse et le port source du paquet pour utiliser son propre couple `(IP publique; port publique)`. Le `port publique` choisi pour la traduction dépend du NAT, en principe on ne peut pas vraiment le deviner à l'avance
+Cette addresse est routable dans le reseaux local. Mais pas dans l'Internet publique. Lorsque du traffic sortant est émis depuis le réseaux local (eg. se connecter à un site web), le serveur doit connaitre l'address source/d'origine pour répondre.
 
-En pratique, les paquets peuvent traverser **plusieurs NAT sur l'infrastructure du fournisseur** avant d'atteindre leur destination. À chaque fois qu'une sortante est initié, la passerelle maintient un mapping entre l'extrémité privée et l'extrémité publique. Chaque paquet envoyée sur cette connection voie son origine/source traduit à la volée par le NAT. Par exemple :
+C'est là qu'intervient le **Network Address Translation (NAT)**. Dans le cas classique d'un NAT IPv4, la passerelle du réseau local traduit l'adresse et le port source du paquet pour utiliser son propre couple `(IP publique; port publique)`. Le `port publique` choisi pour la traduction dépend du NAT, en principe on ne peut pas vraiment le deviner à l'avance
+
+En pratique, les paquets peuvent traverser **plusieurs NAT sur l'infrastructure du fournisseur** avant d'atteindre leur destination. À chaque fois qu'une connection sortante est initiée, la passerelle maintient un mappage entre l'extrémité privée et l'extrémité publique. Chaque paquet envoyée sur cette connection voit son origine/source traduit à la volée par le NAT. Par exemple :
 
 ```txt
 ┌──────────────────┐      ┌─────────────────────┐
@@ -74,7 +76,7 @@ En pratique, les paquets peuvent traverser **plusieurs NAT sur l'infrastructure 
 └──────────────────┘      └─────────────────────┘
 ```
 
-Lorsque la réponse revient vers `82.67.183.248:39142`, la passerelle consulte ce mapping et retransmet le paquet vers `192.168.1.29:54321`.
+Lorsque la réponse revient vers `82.67.183.248:39142`, la passerelle consulte ce mappage et retransmet le paquet vers `192.168.1.29:54321`.
 
 ---
 
@@ -84,10 +86,9 @@ Lorsque la réponse revient vers `82.67.183.248:39142`, la passerelle consulte c
 
 Dans le modèle client-serveur, le NAT ne pose pas de soucis car le serveur est publiquement routable : il est accessible sur l'Internet publique. Une fois que la connection est initiée par le client (eg. un équipement du réseau privé/local) le NAT enregistre le mappage `(IP privée; port privée) <-> (IP publique; port publique)`, le serveur peut ensuite répondre et le NAT effectuer la traduction et transmettre à l'équipement associé du reseau privée.
 
-Dans le modèle P2P, le NAT pose problème dans le cas où les deux pairs sont chacun derrière un NAT. Aucun des pairs n'est directement accessible car aucun des NAT ne contient le mappage `(IP privée; port privée) <-> (IP publique; port publique)`. D'ailleurs les pairs eux-mêmes ne connaissent pas personnelement leur `(IP publique; port publique)` : cette information est maintenu par leur NAT respectif. Aucun des deux ne peut donc simplement initier une connexion vers l'autre comme il le ferait avec un serveur publiquement adressable. Il faut alors franchir deux barrières :
+Dans le modèle P2P, le NAT pose problème dans le cas où les deux pairs sont chacun derrière un NAT. Aucun des pairs n'est directement accessible car aucun des NAT ne contient le mappage `(IP privée; port privée) <-> (IP publique; port publique)`.
 
-- Le parefeux de la passerelle bloque les paquets entrants.
-- La passerelle ignore vers quel equipement du reseaux local rediriger les paquets entrants.
+D'ailleurs les pairs eux-mêmes ne connaissent pas leur `(IP publique; port publique)` : cette information est maintenu par leur NAT respectif. Aucun des deux ne peut donc simplement initier une connexion vers l'autre comme il le ferait avec un serveur publiquement adressable.
 
 ```txt
         Pair A                                   Pair B
@@ -109,14 +110,16 @@ Dans le modèle P2P, le NAT pose problème dans le cas où les deux pairs sont c
 
 # 4. Découvrir son adresse publique avec STUN
 
-La première étape pour tenter de traverser le NAT c'est de connaitre la resolution `(IP publique; port publique)` effectué par le NAT. Cette information est necessaire pour le pair distant pour router ses paquets. La [**RFC-8489**](https://www.rfc-editor.org/info/rfc8489/) définit une suite d'outils pour traverser un NAT. L'abstract indique :
+La première étape pour tenter de traverser le NAT c'est de connaitre la resolution `(IP publique; port publique)` effectué par le NAT. Cette information est necessaire pour le pair distant pour router ses paquets. La [**RFC 8489**](https://www.rfc-editor.org/info/rfc8489/) définit une suite d'outils pour traverser un NAT. L'abstract indique :
 
 > "Session Traversal Utilities for NAT (STUN) is a protocol that serves
 > as a tool for other protocols in dealing with NAT traversal. It can
 > be used by an endpoint to determine the IP address and port allocated
 > to it by a NAT. "
 
-Cette RFC definie un unique type de message: `Binding`, un format binaire, des attributs de message entre autres. Ce qui nous interesse pour la resolution `(IP publique; port publique)` du NAT c'est de decoder l'attribut `XOR-MAPPED-ADDRESS`. Cet attribut contient l'IP et le port du dernier NAT avant le serveur STUN.
+Cette RFC definie une seule methode: `Binding` (le champ "type de message" du header encode aussi une classe : requête, succès, erreur ou indication, mais un seul type d'échange nous interesse ici : la requête `Binding` et sa réponse). Ce qui nous interesse pour la resolution `(IP publique; port publique)` du NAT c'est de decoder l'attribut `XOR-MAPPED-ADDRESS` de la réponse. Cet attribut contient l'adresse publique du client telle que vue par le serveur STUN, c'est à dire après traduction par le dernier NAT traversé.
+
+{{< collapse title="Format binaire des messages STUN" >}}
 
 En-tête STUN :
 
@@ -158,7 +161,11 @@ Attribut `XOR-MAPPED-ADDRESS` :
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
-Une bonne nouvelle c'est que Google met gratuitement a disposition des serveurs STUN pour les projets WebRTC. Par example: `stun.l.google.com:19302`. En Go, le parsing ressemble à :
+{{< /collapse >}}
+
+Une bonne nouvelle c'est que Google met gratuitement a disposition des serveurs STUN pour les projets WebRTC. Par example: `stun.l.google.com:19302`.
+
+{{< collapse title="Example Go" >}}
 
 ```go
 // main.go
@@ -239,7 +246,9 @@ func getAddress(b []byte) (netip.AddrPort, error) {
 }
 ```
 
-En relancant plusieurs fois de suite on voit que l'IP reste fixe mais le port change. Dans mon cas particulier j'ai opté pour une IP fixe auprès de mon FAI.
+{{< /collapse >}}
+
+En relancant l'éxecution plusieurs fois de suite on voit que l'IP reste fixe mais le port change :
 
 ```sh
 $ go run .
@@ -252,13 +261,19 @@ $ go run .
 2026/09/27 23:41:23 NAT: 82.67.x.x:55655
 ```
 
+Dans mon cas particulier j'ai une IP fixe auprès de mon FAI, ce qui explique qu'elle ne varie pas d'un run à l'autre ; le port, lui, change car c'est le NAT qui choisit dynamiquement la traduction à chaque nouvelle connexion initié par le programme Go.
+
+{{< alert type="warning" >}}
+Cette adresse n'est valable que pour parler à **ce serveur STUN précis**. Certains NAT (dits **symétriques**) attribuent une traduction différente selon la destination contactée. J'y reviens en partie 6.
+{{< /alert >}}
+
 # 5. UDP hole punching
 
 ├── principe
 ├── échange des endpoints
 └── établissement du chemin direct
 
-Chaque tentative échoue pour la même raison : un NAT ne laisse entrer un paquet que s'il correspond à une entrée déjà présente dans sa table de mapping, et cette table n'est alimentée que par le **trafic sortant** de son propre réseau. Quand `Peer A` envoie vers `Peer B`, ce paquet sort sans problème de `NAT A`, mais en arrivant sur `NAT B`, aucune entrée sortante ne correspond, il est alors rejeté (même sans tenir compte du réglage du parefeux). Cette siutation est symétrique pour `Peer B` qui envoie vers `Peer A`.
+Chaque tentative échoue pour la même raison : un NAT ne laisse entrer un paquet que s'il correspond à une entrée déjà présente dans sa table de mappage, et cette table n'est alimentée que par le **trafic sortant** de son propre réseau. Quand `Peer A` envoie vers `Peer B`, ce paquet sort sans problème de `NAT A`, mais en arrivant sur `NAT B`, aucune entrée sortante ne correspond, il est alors rejeté (même sans tenir compte du réglage du parefeux). Cette siutation est symétrique pour `Peer B` qui envoie vers `Peer A`.
 
 {{< alert type="warning" >}}
 Résultat : même en connaissant l'adresse publique de l'autre, aucun des deux ne peut initier de connexion en premier, car son paquet sera bloqué par le NAT distant.
