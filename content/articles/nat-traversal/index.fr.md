@@ -271,17 +271,11 @@ Cette adresse dépend-elle de la destination contactée ? Pour la plupart des NA
 
 <br>
 
-# 5. UDP hole punching
+# 5. Percement de NAT
 
 ├── principe
 ├── échange des endpoints
 └── établissement du chemin direct
-
-Chaque tentative échoue pour la même raison : un NAT ne laisse entrer un paquet que s'il correspond à une entrée déjà présente dans sa table de mappage, et cette table n'est alimentée que par le **trafic sortant** de son propre réseau. Quand `Peer A` envoie vers `Peer B`, ce paquet sort sans problème de `NAT A`, mais en arrivant sur `NAT B`, aucune entrée sortante ne correspond, il est alors rejeté (même sans tenir compte du réglage du pare-feu). Cette situation est symétrique pour `Peer B` qui envoie vers `Peer A`.
-
-{{< alert type="warning" >}}
-Résultat : même en connaissant l'adresse publique de l'autre, aucun des deux ne peut initier de connexion en premier, car son paquet sera bloqué par le NAT distant.
-{{< /alert >}}
 
 # 6. Limites
 
