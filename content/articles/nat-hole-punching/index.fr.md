@@ -1,5 +1,5 @@
 +++
-title = "P2P et perçage de NAT"
+title = "P2P: trouver une porte dans le mur"
 date = '2026-09-27'
 draft = false
 description = "..."
@@ -33,3 +33,39 @@ Le modèle client-serveur présente une bonne affinité avec les contraintes des
 
 sujet:
 Nat, udp/tcp, ipv4/ipv6
+
+```txt
+
+Two Buttons
+« Autoriser tout le trafic entrant » / « Rester derrière le NAT »
+
+
+1. Client-serveur vs P2P
+   └── distinction topologique
+
+2. Le problème des réseaux privés
+   ├── NAT
+   ├── firewall
+   └── pourquoi client-serveur fonctionne naturellement
+
+3. Pourquoi le P2P est différent
+   └── A veut contacter B, mais B n'est pas directement joignable
+
+4. Découvrir son adresse publique avec STUN
+
+5. UDP hole punching
+   ├── principe
+   ├── échange des endpoints
+   └── établissement du chemin direct
+
+6. Limites
+   ├── types de NAT
+   ├── firewalls
+   └── cas où le punching échoue
+
+7. TURN : le fallback
+   └── relayer le trafic quand le P2P direct est impossible
+
+8. Implémentation Go
+   └── petite démo concrète
+```
