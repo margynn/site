@@ -116,7 +116,7 @@ La première étape pour tenter de traverser le NAT c'est de connaitre la resolu
 > be used by an endpoint to determine the IP address and port allocated
 > to it by a NAT. "
 
-Cette RFC definie un unique type de message: `Binding`, un format binaire, des attributs de message entre autres. Ce qui nous interesse pour la resolution `(IP publique; port publique)` du NAT c'est de decoder l'attribute `XOR-MAPPED-ADDRESS`. Cet attribut contient l'IP et le port du NAT correspondant.
+Cette RFC definie un unique type de message: `Binding`, un format binaire, des attributs de message entre autres. Ce qui nous interesse pour la resolution `(IP publique; port publique)` du NAT c'est de decoder l'attribut `XOR-MAPPED-ADDRESS`. Cet attribut contient l'IP et le port du dernier NAT avant le serveur STUN.
 
 En-tête STUN :
 
@@ -148,7 +148,7 @@ Attribut STUN :
 
 Attribut `XOR-MAPPED-ADDRESS` :
 
-```
+```txt
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -158,7 +158,7 @@ Attribut `XOR-MAPPED-ADDRESS` :
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
-Une bonne nouvelle c'est que Google met gratuitement a disposition des serveurs STUN pour les projets WebRTC. Par example: `stun.l.google.com:19302` (UDP & TCP). En Go, le parsing ressemble à :
+Une bonne nouvelle c'est que Google met gratuitement a disposition des serveurs STUN pour les projets WebRTC. Par example: `stun.l.google.com:19302`. En Go, le parsing ressemble à :
 
 ```go
 // main.go
