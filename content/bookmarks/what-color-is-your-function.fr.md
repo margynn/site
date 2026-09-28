@@ -5,6 +5,5 @@ draft = false
 link = 'https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/'
 bookmark_type = 'article'
 author = "Bob Nystrom"
-# description = "Comment async/await contamine tout un projet — expliqué à travers une ingénieuse métaphore des couleurs."
-tags = ["programming", "async", "languages"]
+tags = ["programmation", "async", "languages"]
 +++

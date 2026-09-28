@@ -10,8 +10,8 @@ readingTime = true
 
 Quand, comme moi, on vient du monde du développement Web, et que l'on s'intéresse progressivement au réseau et aux systèmes distribués et décentralisés, on sort du modèle familier client-serveur pour se diriger vers le paradigme du pair-à-pair (abrégé P2P). Et, en abordant ce paradigme on découvre une série de problèmes et de contraintes nouvelles que je voudrais partager ici.
 
-{{< collapse title="Dileme lors de la configuration de mon router domestique" >}}
-{{< imgproc "meme.fr.jpg" Fit "600x600" center />}}
+{{< collapse title="Dilemme lors de la configuration de mon routeur domestique" >}}
+{{< imgproc "meme.jpg" Fit "800x800" center />}}
 {{< /collapse >}}
 
 ---
@@ -32,18 +32,18 @@ Le modèle client-serveur est centralisé. Il suppose deux familles de participa
 
 # 2. Le problème des réseaux privés
 
-"Internet est un réseau de réseaux", et la plupart des utilisateurs se trouvent dans des réseaux privés (eg. réseaux domestique, d'entreprise, LAN, VPN etc...), c'est à dire non-adressable depuis l'Internet public.
+"Internet est un réseau de réseaux", et la plupart des utilisateurs se trouvent dans des réseaux privés (eg. réseaux domestiques, d'entreprise, LAN, VPN etc.), c'est-à-dire non adressable depuis l'Internet public.
 Je vois deux raisons principales à cela, une sécuritaire et une technique/historique:
 
 ## Sécurité et isolation
 
-L'isolation d'équipements dans des réseaux privés permet d'éviter le trafic entrant, même sans configuration explicite de pare-feu. Par définition, les équipements d'un réseau privé ne sont pas adressables depuis l'Internet public. C'est souhaitable: le jour où mon grille pain connecté accepte une connexion depuis Pékin, je considère que l'architecture réseau a échoué.
+L'isolation d'équipements dans des réseaux privés permet d'éviter le trafic entrant, même sans configuration explicite de pare-feu. Par définition, les équipements d'un réseau privé ne sont pas adressables depuis l'Internet public. C'est souhaitable: le jour où mon grille-pain connecté accepte une connexion depuis Pékin, je considère que l'architecture réseau a échoué.
 
 ## Épuisement des adresses IPv4
 
-L'Internet Protocol, est le protocole au coeur du routage des données sur Internet. IPv4, version du protocole IP le plus déployé, a été formalisé en 1981 dans la [**RFC 791**](https://www.rfc-editor.org/info/rfc791).
+L'Internet Protocol est le protocole au cœur du routage des données sur Internet. IPv4, version du protocole IP le plus déployé, a été formalisé en 1981 dans la [**RFC 791**](https://www.rfc-editor.org/info/rfc791).
 
-Une adresse IPv4 est encodée sur 32 bits, ça représente une plage de `1<<32 = 4_294_967_296` adresses. C'est-à-dire environ 4 Milliards d'adresses IPv4 routables sur l'Internet public. C'est insuffisant pour attribuer une adresse IPv4 unique à chaque équipement connecté à Internet.
+Une adresse IPv4 est encodée sur 32 bits, ça représente une plage de `1<<32 = 4_294_967_296` adresses. C'est-à-dire environ 4 milliards d'adresses IPv4 routables sur l'Internet public. C'est insuffisant pour attribuer une adresse IPv4 unique à chaque équipement connecté à Internet.
 
 {{< alert type="info" >}}
 IPv6 résout ce problème en utilisant des adresses de 128 bits, soit `1<<128 ≈ 3,4×10^38` adresses possibles. Mais le déploiement d'IPv6 étant progressif, IPv4 reste largement utilisé.
@@ -65,11 +65,9 @@ en0: ...
 
 Cette adresse est routable dans le réseau local. Mais pas dans l'Internet public. Lorsque du trafic sortant est émis depuis le réseau local (eg. se connecter à un site web), le serveur doit connaitre l'adresse source/d'origine pour répondre.
 
-C'est là qu'intervient le **Network Address Translation (NAT)**. Dans le cas classique d'un NAT IPv4, la passerelle du réseau local traduit l'adresse et le port source du paquet pour utiliser son propre couple _(IP publique ; port publique)_. Le port publique choisi pour la traduction dépend du NAT, en principe on ne peut pas vraiment le deviner à l'avance
+C'est là qu'intervient le **Network Address Translation (NAT)**. Dans le cas classique d'un NAT IPv4, la passerelle du réseau local traduit l'adresse et le port source du paquet pour utiliser son propre couple _(IP publique ; port public)_. Le port public choisi pour la traduction dépend du NAT, en principe on ne peut pas vraiment le deviner à l'avance.
 
 En pratique, les paquets peuvent traverser **plusieurs NAT sur l'infrastructure du fournisseur** avant d'atteindre leur destination. À chaque fois qu'une connexion sortante est initiée, la passerelle maintient un mappage entre l'extrémité privée et l'extrémité publique. Chaque paquet envoyé sur cette connexion voit son origine/source traduite à la volée par le NAT.
-
-// TODO: schema de routage + traduction
 
 ---
 
@@ -77,11 +75,11 @@ En pratique, les paquets peuvent traverser **plusieurs NAT sur l'infrastructure 
 
 # 3. Le P2P est différent
 
-Dans le modèle client-serveur, le NAT ne pose pas de soucis car le serveur est publiquement routable : il est accessible sur l'Internet public. Une fois que la connexion est initiée par le client (eg. un équipement du réseau privé/local) le NAT enregistre le mappage _(IP privée ; port privée)_ <-> _(IP publique ; port publique)_, le serveur peut ensuite répondre et le NAT effectuer la traduction et transmettre à l'équipement associé du réseau privé.
+Dans le modèle client-serveur, le NAT ne pose pas de soucis car le serveur est publiquement routable : il est accessible sur l'Internet public. Une fois que la connexion est initiée par le client (eg. un équipement du réseau privé/local) le NAT enregistre le mappage _(IP privée ; port privé)_ <-> _(IP publique ; port public)_, le serveur peut ensuite répondre et le NAT effectue la traduction et transmet à l'équipement associé du réseau privé.
 
-Dans le modèle P2P, le NAT pose problème dans le cas où les deux pairs sont chacun derrière un NAT. Aucun des pairs n'est directement accessible car aucun des NAT ne contient le mappage _(IP privée ; port privée)_ <-> _(IP publique ; port publique)_.
+Dans le modèle P2P, le NAT pose problème dans le cas où les deux pairs sont chacun derrière un NAT. Aucun des pairs n'est directement accessible car aucun des NAT ne contient le mappage _(IP privée ; port privé)_ <-> _(IP publique ; port public)_.
 
-D'ailleurs les pairs eux-mêmes ne connaissent pas leur _(IP publique ; port publique)_ : cette information est maintenue par leur NAT respectif. Aucun des deux ne peut donc simplement initier une connexion vers l'autre comme il le ferait avec un serveur publiquement adressable.
+D'ailleurs les pairs eux-mêmes ne connaissent pas leur _(IP publique ; port public)_ : cette information est maintenue par leur NAT respectif. Aucun des deux ne peut donc simplement initier une connexion vers l'autre comme il le ferait avec un serveur publiquement adressable.
 
 ---
 
@@ -89,14 +87,14 @@ D'ailleurs les pairs eux-mêmes ne connaissent pas leur _(IP publique ; port pub
 
 # 4. Découvrir son adresse publique avec STUN
 
-La première étape pour tenter de traverser le NAT c'est de connaitre la résolution _(IP publique ; port publique)_ effectuée par le NAT. Cette information est nécessaire pour le pair distant pour router ses paquets. La [**RFC 8489**](https://www.rfc-editor.org/info/rfc8489/) définit une suite d'outils pour traverser un NAT. L'abstract indique :
+La première étape pour tenter de traverser le NAT c'est de connaitre la résolution _(IP publique ; port public)_ effectuée par le NAT. Cette information est nécessaire pour le pair distant pour router ses paquets. La [**RFC 8489**](https://www.rfc-editor.org/info/rfc8489/) définit une suite d'outils pour traverser un NAT. L'abstract indique :
 
 > "Session Traversal Utilities for NAT (STUN) is a protocol that serves
 > as a tool for other protocols in dealing with NAT traversal. It can
 > be used by an endpoint to determine the IP address and port allocated
 > to it by a NAT. "
 
-Cette RFC définit une seule méthode: `Binding` (le champ "type de message" du header encode aussi une classe : requête, succès, erreur ou indication, mais un seul type d'échange nous intéresse ici : la requête `Binding` et sa réponse). Ce qui nous intéresse pour la résolution _(IP publique ; port publique)_ du NAT c'est de décoder l'attribut `XOR-MAPPED-ADDRESS` de la réponse. Cet attribut contient l'adresse publique du client telle que vue par le serveur STUN, c'est à dire après traduction par le dernier NAT traversé.
+Cette RFC définit une seule méthode: `Binding` (le champ "type de message" du header encode aussi une classe : requête, succès, erreur ou indication, mais un seul type d'échange nous intéresse ici : la requête `Binding` et sa réponse). Ce qui nous intéresse pour la résolution _(IP publique ; port public)_ du NAT c'est de décoder l'attribut `XOR-MAPPED-ADDRESS` de la réponse. Cet attribut contient l'adresse publique du client telle que vue par le serveur STUN, c'est-à-dire après traduction par le dernier NAT traversé.
 
 {{< collapse title="Format binaire des messages STUN" >}}
 
@@ -227,6 +225,10 @@ func getAddress(b []byte) (netip.AddrPort, error) {
 
 {{< /collapse >}}
 
+{{< alert type="warning" >}}
+Cette démo simplifie volontairement STUN : le Transaction ID de `bindingRequest` est laissé à zéro, alors qu'il devrait être tiré aléatoirement puis vérifié dans la réponse (pour rejeter les réponses qui ne correspondent pas à la requête). Les erreurs de `Dial`, `Write` et `Read` sont aussi ignorées, ce qui n'est acceptable que pour une démonstration.
+{{< /alert >}}
+
 En relançant l'exécution plusieurs fois de suite on voit que l'IP reste fixe mais le port change :
 
 ```sh
@@ -252,26 +254,26 @@ Cette adresse dépend-elle de la destination contactée ? Pour la plupart des NA
 
 # 5. Percement de NAT
 
-Si on résume le pièces assemblées:
+Si on résume les pièces assemblées :
 
-- Le NAT traduit l'origine des paquets du reseau privé et rejette les paquets entrants qui ne correspondent à aucun mappage.
-- STUN permet d'obtenir l'addresse et port publique du dernier NAT emprunté.
+- Le NAT traduit l'origine des paquets du réseau privé et rejette les paquets entrants qui ne correspondent à aucun mappage.
+- STUN permet d'obtenir l'adresse et le port publics du dernier NAT emprunté.
 
-On peut donc esquissé le protocole suivant pour tenter de percer les NAT et permettre a deux pairs, chacun derrière un NAT de pouvoir communiquer:
+On peut donc esquisser le protocole suivant pour tenter de percer les NAT et permettre à deux pairs, chacun derrière un NAT, de pouvoir communiquer :
 
-1. Chaque pair résout sont addressage publique avec STUN.
-   Ce faisant, chaque NAT va enregistrer un mapping _privé<->publique_
-2. Chaque pair échange son addressage publique avec l'autre.
-   Le mecanisme importe peu, il peut y avoir un serveur de rendez-vous publique.
-3. Sur la **meme connection** que pour contacter le serveur STUN, les pairs
-   envoie des paquets vers l'addresse publique de l'autre
+1. Chaque pair résout son adressage public avec STUN.
+   Ce faisant, chaque NAT va enregistrer un mappage _privé<->public_
+2. Chaque pair échange son adressage public avec l'autre.
+   Le mécanisme importe peu, il peut y avoir un serveur de rendez-vous public.
+3. Sur la **même connexion** que pour contacter le serveur STUN, les pairs
+   envoient des paquets vers l'adresse publique de l'autre
 4. Profit ??
 
-Il manque un dernier élément : le protocole réseau utilisé. Sur Internet les deux principaux protocoles réseau rencontrés sont TCP et UDP. Chacun offre des garanties de deliverabilité et d'ordonnencement différentes.
+Il manque un dernier élément : le protocole réseau utilisé. Sur Internet les deux principaux protocoles réseau rencontrés sont TCP et UDP. Chacun offre des garanties de délivrabilité et d'ordonnancement différentes.
 
-**TCP :** Garantie la délibevaribilité des paquets vers la destination ainsi que leur ordre de reception. Si `A` envoie avec succès les paquets `1,2,3` vers `B`, alors `B` est garantie de recevoir ces paquets dans l'ordre d'envoie. L'émetteur recoit une garantie de reception. TCP est dit "avec état", car chaque extrémité doit maintenir un état de connection avec le pair distant. Une socket TCP est definie entièrement par _(IP locale, port local, IP distante, port distant)_. Elle ne recoit des paquets que d'un seule expéditeur
+**TCP :** Fournit un flux d'octets fiable et ordonné entre les deux extrémités : TCP gère en interne les retransmissions et le réordonnancement, l'application ne voit qu'un flux continu. Si `A` écrit avec succès les octets `1,2,3` puis `4,5,6`, `B` est garanti de les lire dans cet ordre, mais sans garantie qu'ils arrivent découpés de la même façon. TCP est dit "avec état", car chaque extrémité doit maintenir un état de connexion avec le pair distant. Une socket TCP est définie entièrement par _(IP locale, port local, IP distante, port distant)_. Elle ne reçoit des données que d'un seul expéditeur
 
-**UDP :** Ne garantie pas la déliverabilité des paquets, ni leur ordre de reception. C'est un protocole plus optimiste et simpliste que TCP. UDP est sans état, l'émetteur ne recoit jamais de confirmation de reception. UDP garantie cependant l'integrité des messages envoyés (ie. pas de reception partielle). Une socket UDP est définie entièrement par _(IP locale, port local)_. Elle peut recevoir des paquets de plusieurs expéditeurs différents.
+**UDP :** Ne garantit pas la délivrabilité des paquets, ni leur ordre de réception. C'est un protocole plus optimiste et simpliste que TCP. UDP est sans état, l'émetteur ne reçoit jamais de confirmation de réception. UDP conserve en revanche les frontières des datagrammes : chaque `WriteToUDP` correspond à un `ReadFromUDP` côté récepteur. Une socket UDP est définie entièrement par _(IP locale, port local)_. Elle peut recevoir des paquets de plusieurs expéditeurs différents.
 
 En Go :
 
@@ -301,22 +303,91 @@ func udp() {
 }
 ```
 
-Dans le cas de UDP `conn` creera un seul mappage NAT, qu'il communique avec `A` ou `B` (dans le cas d'un NAT full-cone). L'intérêt est immense : une fois le mappage realisé avec une requete STUN, on peut le reutilise, en UDP, pour mapper le traffic entrant vers la bonne socket.
+Dans le cas de UDP `conn` créera un seul mappage NAT, qu'il communique avec `A` ou `B` (dans le cas d'un NAT full-cone). L'intérêt est immense : une fois le mappage réalisé avec une requête STUN, on peut le réutiliser, en UDP, pour mapper le trafic entrant vers la bonne socket.
+
+---
+
+<br>
+
+# 6. Démonstration
 
 {{< collapse title="Percement NAT en Go" >}}
 
 ```go
+func main() {
+	conn, _ := net.ListenUDP("udp4", &net.UDPAddr{IP: net.IPv4zero})
+	defer conn.Close()
 
+	log.Printf("local: %v", conn.LocalAddr())
+
+	// Discover public endpoint
+	stun, _ := net.ResolveUDPAddr("udp4", "stun.l.google.com:19302")
+	conn.WriteToUDP(bindingRequest[:], stun)
+	buf := make([]byte, 1500)
+	n, _, _ := conn.ReadFromUDP(buf)
+	public, _ := getAddress(buf[:n])
+
+	log.Printf("public: %v", public)
+
+	// Enter peer's public endpoint
+	fmt.Print("peer: ")
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+
+	peer, err := net.ResolveUDPAddr("udp4", scanner.Text())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Receive packets from the peer.
+	go func() {
+		buf := make([]byte, 1500)
+		for {
+			n, addr, _ := conn.ReadFromUDP(buf)
+			log.Printf("[%v] <- %v: %s", public, addr, buf[:n])
+		}
+	}()
+
+	// Repeatedly send packets to the peer.
+	// Both peers do this simultaneously: this is the hole punching.
+	ticker := time.NewTicker(time.Second)
+	defer ticker.Stop()
+
+	for range ticker.C {
+		n := rand.Intn(1000)
+		msg := strconv.Itoa(n)
+		_, _ = conn.WriteToUDP([]byte(msg), peer)
+		log.Printf("[%v] -> %v: %s", public, peer, msg)
+	}
+}
 ```
 
 {{< /collapse >}}
 
-J'ai fais tourner sur
+Il y a deux machines : l'une sur mon réseau domestique, accessible en SSH, et l'autre sur mon réseau mobile. Voici les resultats:
 
-# 6. Limites
+```sh
 
-├── types de NAT
-├── firewalls
-└── cas où le punching échoue
+```
 
-# 8. Implémentation Go
+---
+
+<br>
+
+# 7. Limites
+
+Le percement de NAT n’est cependant pas toujours possible. Dire qu’un mappage NAT redirige le trafic entrant vers le bon équipement était une simplification : le routeur peut aussi filtrer les paquets selon leur provenance.
+
+Il y avait aussi un angle mort dans la procédure décrite plus haut. Si le NAT accepte les paquets de n’importe quelle provenance, tout pair connaissant l’adresse et le port publics peut écrire au pair local. À l’application de filtrer les paquets. Cependant, c'est sans doute pas la strategie d'isolation réseau la plus fiable.
+
+C'est certainement moins critique que d'ouvrir tous les ports de son routeur et d'exposer l'intégralité du réseau privé sur l'Internet public. Mais dans des contextes où l'isolation réseaux est critique (type réseaux d'entreprise), ce n'est pas acceptable.
+
+Les NAT ont en réalité deux décisions indépendantes à prendre : quel port public attribuer à un flux sortant, et quels paquets entrants accepter sur ce port. Il existe plusieurs comportements de NAT, parmi :
+
+- **Full-cone :** le port public attribué ne dépend pas de la destination, et une fois le mappage créé, n’importe quel pair peut lui envoyer des paquets UDP vers l’adresse et le port publics découverts via STUN. Le percement décrit plus haut fonctionne alors.
+- **(Port-)restricted cone :** le port public attribué ne dépend pas non plus de la destination, mais le NAT ne fait pas que traduire : il filtre aussi les paquets entrants et n'accepte que ceux provenant d'une IP (et, pour port-restricted, d'un port) déjà contactée depuis ce mappage. Le percement fonctionne toujours, à condition que chaque pair ait d'abord envoyé un paquet sortant vers l'autre — c'est le rôle des paquets répétés du hole punching.
+- **Symétrique :** le port public attribué dépend cette fois de la destination. Le port découvert par le serveur STUN peut être différent de celui utilisé pour joindre l’autre pair. Lui transmettre ce port ne suffit pas pour percer le NAT.
+
+Ensuite, le pare-feu peut encore ajouter ses propres règles et bloquer les paquets UDP entrants, possiblement en fonction de leur origine. Sur les réseaux domestiques, le percement de NAT est généralement réalisable (pour permettre notamment les applications P2P, les jeux en réseau et autres).
+
+Dans les cas où le percement de NAT n'est pas possible, il y a une solution de repli : TURN [**RFC 8656**](https://www.rfc-editor.org/info/rfc8656/). Les deux pairs établissent chacun une connexion sortante vers un serveur relais, qui relaie leurs paquets. TURN fonctionne si les deux pairs peuvent joindre le relais (générallement directement addressable). La contrepartie est le coût élevé en bande passante sur le serveur relais et possiblement des latences supplémentaires puisque le trafic passe par un intermédiaire.

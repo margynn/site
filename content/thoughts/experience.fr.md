@@ -5,7 +5,7 @@ draft = true
 tags = ["career"]
 +++
 
-J'ai récemment vécu un "retour au réel" désagrèable, mais qui sera peut-être salvateur pour plus tard.
+J'ai récemment vécu un "retour au réel" lors .
 
 TLDR : l'ancienneté et l'expérience (j'entends légitimité technique) sont à peu de choses près orthogonales.
 
