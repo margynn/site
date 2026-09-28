@@ -273,7 +273,7 @@ Il manque un dernier élément : le protocole réseau utilisé. Sur Internet les
 
 **UDP :** Ne garantie pas la déliverabilité des paquets, ni leur ordre de reception. C'est un protocole plus optimiste et simpliste que TCP. UDP est sans état, l'émetteur ne recoit jamais de confirmation de reception. UDP garantie cependant l'integrité des messages envoyés (ie. pas de reception partielle).
 
-Dans UDP il n'y pas de notion de "connection" car aucune extremité ne maintient d'état. Cette distinction est importante car elle implique qu'un même socket UDP peut etre utilisé avec plusieurs destinations. Ce qui n'est en générale pas faisable avec TCP.
+Dans UDP il n'y pas de notion de "connection" car aucune extremité ne maintient d'état. En opposition a TCP qui realise une poigné de main `SYN / SYN-ACK / ACK` pour établir la connection. Cette distinction est importante car elle implique qu'un même socket UDP peut etre utilisé avec plusieurs destinations. Ce qui n'est en générale pas faisable avec TCP.
 
 En Go :
 
@@ -284,7 +284,7 @@ func tcp() {
 		panic(err)
 	}
 	defer conn.Close()
-	_, _ := conn.Write([]byte("hello"))
+	_, _ = conn.Write([]byte("hello"))
 }
 
 func udp() {
@@ -298,8 +298,8 @@ func udp() {
 	a := &net.UDPAddr{IP: net.ParseIP("1.2.3.4"), Port: 5000}
 	b := &net.UDPAddr{IP: net.ParseIP("5.6.7.8"), Port: 6000}
 
-	conn.WriteToUDP([]byte("hello A"), a)
-	conn.WriteToUDP([]byte("hello B"), b)
+	_, _ = conn.WriteToUDP([]byte("hello A"), a)
+	_, _ = conn.WriteToUDP([]byte("hello B"), b)
 }
 ```
 
