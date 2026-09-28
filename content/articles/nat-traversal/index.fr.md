@@ -269,11 +269,9 @@ On peut donc esquissé le protocole suivant pour tenter de percer les NAT et per
 
 Il manque un dernier élément : le protocole réseau utilisé. Sur Internet les deux principaux protocoles réseau rencontrés sont TCP et UDP. Chacun offre des garanties de deliverabilité et d'ordonnencement différentes.
 
-**TCP :** Garantie la délibevaribilité des paquets vers la destination ainsi que leur ordre de reception. Si `A` envoie avec succès les paquets `1,2,3` vers `B`, alors `B` est garantie de recevoir ces paquets dans l'ordre d'envoie. L'émetteur recoit une garantie de reception. TCP est dit "avec état", car chaque extrémité doit maintenir un état de connection avec le pair distant.
+**TCP :** Garantie la délibevaribilité des paquets vers la destination ainsi que leur ordre de reception. Si `A` envoie avec succès les paquets `1,2,3` vers `B`, alors `B` est garantie de recevoir ces paquets dans l'ordre d'envoie. L'émetteur recoit une garantie de reception. TCP est dit "avec état", car chaque extrémité doit maintenir un état de connection avec le pair distant. Une socket TCP est definie entièrement par _(IP locale, port local, IP distante, port distant)_. Elle ne recoit des paquets que d'un seule expéditeur
 
-**UDP :** Ne garantie pas la déliverabilité des paquets, ni leur ordre de reception. C'est un protocole plus optimiste et simpliste que TCP. UDP est sans état, l'émetteur ne recoit jamais de confirmation de reception. UDP garantie cependant l'integrité des messages envoyés (ie. pas de reception partielle).
-
-Dans UDP il n'y pas de notion de "connection" car aucune extremité ne maintient d'état. En opposition a TCP qui realise une poigné de main `SYN / SYN-ACK / ACK` pour établir la connection. Cette distinction est importante car elle implique qu'un même socket UDP peut etre utilisé avec plusieurs destinations. Ce qui n'est en générale pas faisable avec TCP.
+**UDP :** Ne garantie pas la déliverabilité des paquets, ni leur ordre de reception. C'est un protocole plus optimiste et simpliste que TCP. UDP est sans état, l'émetteur ne recoit jamais de confirmation de reception. UDP garantie cependant l'integrité des messages envoyés (ie. pas de reception partielle). Une socket UDP est définie entièrement par _(IP locale, port local)_. Elle peut recevoir des paquets de plusieurs expéditeurs différents.
 
 En Go :
 
