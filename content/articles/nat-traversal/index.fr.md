@@ -67,16 +67,9 @@ Cette adresse est routable dans le réseau local. Mais pas dans l'Internet publi
 
 C'est là qu'intervient le **Network Address Translation (NAT)**. Dans le cas classique d'un NAT IPv4, la passerelle du réseau local traduit l'adresse et le port source du paquet pour utiliser son propre couple _(IP publique ; port publique)_. Le port publique choisi pour la traduction dépend du NAT, en principe on ne peut pas vraiment le deviner à l'avance
 
-En pratique, les paquets peuvent traverser **plusieurs NAT sur l'infrastructure du fournisseur** avant d'atteindre leur destination. À chaque fois qu'une connexion sortante est initiée, la passerelle maintient un mappage entre l'extrémité privée et l'extrémité publique. Chaque paquet envoyé sur cette connexion voit son origine/source traduite à la volée par le NAT. Par exemple :
+En pratique, les paquets peuvent traverser **plusieurs NAT sur l'infrastructure du fournisseur** avant d'atteindre leur destination. À chaque fois qu'une connexion sortante est initiée, la passerelle maintient un mappage entre l'extrémité privée et l'extrémité publique. Chaque paquet envoyé sur cette connexion voit son origine/source traduite à la volée par le NAT.
 
-```txt
-┌──────────────────┐      ┌─────────────────────┐
-│ 192.168.1.29     │      │      NAT Gateway    │
-│ port 54321       │ ───> │ 82.67.183.248:39142 │ ───>  Destination
-└──────────────────┘      └─────────────────────┘
-```
-
-Lorsque la réponse revient vers `82.67.183.248:39142`, la passerelle consulte ce mappage et retransmet le paquet vers `192.168.1.29:54321`.
+// TODO: schema de routage + traduction
 
 ---
 
@@ -89,20 +82,6 @@ Dans le modèle client-serveur, le NAT ne pose pas de soucis car le serveur est 
 Dans le modèle P2P, le NAT pose problème dans le cas où les deux pairs sont chacun derrière un NAT. Aucun des pairs n'est directement accessible car aucun des NAT ne contient le mappage _(IP privée ; port privée)_ <-> _(IP publique ; port publique)_.
 
 D'ailleurs les pairs eux-mêmes ne connaissent pas leur _(IP publique ; port publique)_ : cette information est maintenue par leur NAT respectif. Aucun des deux ne peut donc simplement initier une connexion vers l'autre comme il le ferait avec un serveur publiquement adressable.
-
-```txt
-					Pair A                                   Pair B
-			192.168.1.10:51000                      192.168.2.20:52000
-					│                                        │
-					│                                        │
-					│           Adresse publique ?           │
-					│                                        │
-					│       ─────── impossible ───────       │
-					│                                        │
-				NAT A                                    NAT B
-					│                                        │
-					└────────────── INTERNET ────────────────┘
-```
 
 ---
 
@@ -278,17 +257,52 @@ Si on résume le pièces assemblées:
 - Le NAT traduit l'origine des paquets du reseau privé et rejette les paquets entrants qui ne correspondent à aucun mappage.
 - STUN permet d'obtenir l'addresse et port publique du dernier NAT emprunté.
 
-On peut donc esquissé le protocole suivant pour tenter de percer les NAT et permettre a deux pairs, chacun derrière un NAT (donc non addressable) de pouvoir communiquer:
+On peut donc esquissé le protocole suivant pour tenter de percer les NAT et permettre a deux pairs, chacun derrière un NAT de pouvoir communiquer:
 
-1. Chaque pair résout sont addressage publique avec STUN via UDP.
+1. Chaque pair résout sont addressage publique avec STUN.
    Ce faisant, chaque NAT va enregistrer un mapping _privé<->publique_
 2. Chaque pair échange son addressage publique avec l'autre.
-   Le mecanisme importe peu, serveur de rdv ou autre.
-3. Sur la meme **connection** UDP que pour contacter le serveur STUN, les pairs
+   Le mecanisme importe peu, il peut y avoir un serveur de rendez-vous publique.
+3. Sur la **meme connection** que pour contacter le serveur STUN, les pairs
    envoie des paquets vers l'addresse publique de l'autre
 4. Profit ??
 
-├── principe
+Il manque un dernier élément : le protocole réseau utilisé. Sur Internet les deux principaux protocoles réseau rencontrés sont TCP et UDP. Chacun offre des garanties de deliverabilité et d'ordonnencement différentes.
+
+**TCP :** Garantie la délibevaribilité des paquets vers la destination ainsi que leur ordre de reception. Si `A` envoie avec succès les paquets `1,2,3` vers `B`, alors `B` est garantie de recevoir ces paquets dans l'ordre d'envoie. L'émetteur recoit une garantie de reception. TCP est dit "avec état", car chaque extrémité doit maintenir un état de connection avec le pair distant.
+
+**UDP :** Ne garantie pas la déliverabilité des paquets, ni leur ordre de reception. C'est un protocole plus optimiste et simpliste que TCP. UDP est sans état, l'émetteur ne recoit jamais de confirmation de reception. UDP garantie cependant l'integrité des messages envoyés (ie. pas de reception partielle).
+
+Dans UDP il n'y pas de notion de "connection" car aucune extremité ne maintient d'état. Cette distinction est importante car elle implique qu'un même socket UDP peut etre utilisé avec plusieurs destinations. Ce qui n'est en générale pas faisable avec TCP.
+
+En Go :
+
+```go
+func tcp() {
+	conn, err := net.Dial("tcp", "1.2.3.4:443")
+	if err != nil {
+		panic(err)
+	}
+	defer conn.Close()
+	_, _ := conn.Write([]byte("hello"))
+}
+
+func udp() {
+	// port 0 -> let the OS choose the port
+	conn, err := net.ListenUDP("udp", &net.UDPAddr{Port: 0})
+	if err != nil {
+		panic(err)
+	}
+	defer conn.Close()
+
+	a := &net.UDPAddr{IP: net.ParseIP("1.2.3.4"), Port: 5000}
+	b := &net.UDPAddr{IP: net.ParseIP("5.6.7.8"), Port: 6000}
+
+	conn.WriteToUDP([]byte("hello A"), a)
+	conn.WriteToUDP([]byte("hello B"), b)
+}
+```
+
 ├── échange des endpoints
 └── établissement du chemin direct
 
