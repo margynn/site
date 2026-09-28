@@ -303,8 +303,17 @@ func udp() {
 }
 ```
 
-├── échange des endpoints
-└── établissement du chemin direct
+Dans le cas de UDP `conn` creera un seul mappage NAT, qu'il communique avec `A` ou `B` (dans le cas d'un NAT full-cone). L'intérêt est immense : une fois le mappage realisé avec une requete STUN, on peut le reutilise, en UDP, pour mapper le traffic entrant vers la bonne socket.
+
+{{< collapse title="Percement NAT en Go" >}}
+
+```go
+
+```
+
+{{< /collapse >}}
+
+J'ai fais tourner sur
 
 # 6. Limites
 
