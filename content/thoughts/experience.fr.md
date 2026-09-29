@@ -10,9 +10,7 @@ En l'occurrence le signal est : que je n'aurais peut-être pas suffisamment d'ex
 
 C'est décevant, non ? Mais derrière ce qui semblerait être un à-coup dans l'égo, j'y ai vu une opportunité de réfléchir à ce qu'on qualifie d'expérience dans mon milieu professionnel, et dans les métiers techniques plus généralement.
 
-Comment elle est définie ? qu'est-ce qui compte comme expérience ? comment un discours et une posture peuvent biaiser sa perception ?
-
-L'idée fondamentale est que l'ancienneté et l'expérience, entendu comme légitimité technique, sont à peu près orthogonales. On peut avoir de l'un sans l'autre et inversement.
+La réduction de cette réflection est que l'ancienneté et l'expérience, entendu comme légitimité technique, sont à peu près orthogonales. On peut avoir de l'un sans l'autre et inversement.
 
 Pour l'illustrer : il n'est pas attendu d'un stagiaire de 23 ans d'avoir une expertise technique de haut niveau. La seule vraie attente légitime est qu'il soit curieux et motivé. À l'inverse, un ingénieur de 40 ans génère beaucoup plus d'attente en termes d'expertise technique. C'est raisonnable, car il a a priori plus "d'expérience".
 
@@ -22,8 +20,6 @@ Je crois que cette distinction est une raison pour certains de s'orienter vers d
 
 L'ancienneté est systématique, et facilement mesurable. Et pour cette raison, certains sont tentés d'en faire un proxy de l'expérience. L'expérience, en revanche, est empirique. C'est un ensemble de connaissances, de pratiques, de situations rencontrées, de problèmes résolus et d'initiatives menées. Ça ne se mesure pas simplement. Surtout, c'est une mesure très individuelle.
 
-La vérité c'est que l'on ne peut pas être crédible si ancienneté et expérience sont "trop" décorrélées. C'est une mesure complètement subjective, j'entends. Mais c'est précisément ce "trop" qu'il faut essayer d'estimer.
+La vérité c'est que l'on ne peut pas être cohérent et crédible si ancienneté et expérience sont "trop" décorrélées. C'est une mesure subjective, j'entends. Mais c'est la mesure que cherchais a évaluer chacun des recruteurs avec lesquels j'ai discuté. C'est pour cela que rester dans une situation où l'on n'apprend plus, revient à laisser l'ancienneté s'accumuler sans l'expérience : un pur sabotage.
 
-Tout cela n'est que la première face de la médaille. La seconde est celle de savoir présenter et vendre son expertise. Et c'est peut-être l'aspect le plus important et le moins évident. Il ne s'agit pas de devenir bullshit-man, mais de savoir répondre de façon cohérente sur son expérience, et surtout savoir la mettre en valeur. C'est au fond une empathie avec le recruteur. Le persuader que sa mesure de l'expérience fonctionne bien.
-
-Mais malgré tout il faut quand même pouvoir construire cette expérience. Et à partir de ce constat, j'en déduis que rester dans un endroit où l'on n'apprend rien est, en plus d'une perte de temps, un pur sabotage de carrière. Ça peut arriver, par exemple, dans des contextes où le produit est déjà mature, ou pour des raisons d'organisation où les scopes individuels sont relativement restreints.
+Au dela de ce signal je réalise l'importance de remettre au centre l'apprentissage, l'experience que j'ai à raconter, et la manière de la structurer.
