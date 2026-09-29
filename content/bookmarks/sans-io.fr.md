@@ -1,9 +1,9 @@
 +++
-title = "Sans-io kesako?"
-date = '2026-08-01'
+title = "Sans-io"
+date = '2026-09-29'
 draft = false
 link = 'https://sans-io.readthedocs.io/how-to-sans-io.html'
 bookmark_type = 'article'
-description = "Une epiphanie pour designere des applications réseaux testable et réutilisable"
-tags = ["programming", "async"]
+description = "Une approche pour designer des applications réseaux testables et réutilisables"
+tags = ["programmation", "async"]
 +++
