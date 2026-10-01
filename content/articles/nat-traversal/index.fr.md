@@ -225,10 +225,6 @@ func getAddress(b []byte) (netip.AddrPort, error) {
 
 {{< /collapse >}}
 
-{{< alert type="warning" >}}
-Cette démo simplifie volontairement STUN : le Transaction ID de `bindingRequest` est laissé à zéro, alors qu'il devrait être tiré aléatoirement puis vérifié dans la réponse (pour rejeter les réponses qui ne correspondent pas à la requête). Les erreurs de `Dial`, `Write` et `Read` sont aussi ignorées, ce qui n'est acceptable que pour une démonstration.
-{{< /alert >}}
-
 En relançant l'exécution plusieurs fois de suite on voit que l'IP reste fixe mais le port change :
 
 ```sh
@@ -425,7 +421,6 @@ C'est certainement moins critique que d'ouvrir tous les ports de son routeur et 
 Les NAT ont en réalité deux décisions indépendantes à prendre : quel port public attribuer à un flux sortant, et quels paquets entrants accepter sur ce port. Il existe plusieurs comportements de NAT, parmi :
 
 - **Full-cone :** le port public attribué ne dépend pas de la destination, et une fois le mappage créé, n’importe quel pair peut lui envoyer des paquets UDP vers l’adresse et le port publics découverts via STUN. Le percement décrit plus haut fonctionne alors.
-- **(Port-)restricted cone :** le port public attribué ne dépend pas non plus de la destination, mais le NAT ne fait pas que traduire : il filtre aussi les paquets entrants et n'accepte que ceux provenant d'une IP (et, pour port-restricted, d'un port) déjà contactée depuis ce mappage. Le percement fonctionne toujours, à condition que chaque pair ait d'abord envoyé un paquet sortant vers l'autre — c'est le rôle des paquets répétés du hole punching.
 - **Symétrique :** le port public attribué dépend cette fois de la destination. Le port découvert par le serveur STUN peut être différent de celui utilisé pour joindre l’autre pair. Lui transmettre ce port ne suffit pas pour percer le NAT.
 
 Ensuite, le pare-feu peut encore ajouter ses propres règles et bloquer les paquets UDP entrants, possiblement en fonction de leur origine. Sur les réseaux domestiques, le percement de NAT est généralement réalisable (pour permettre notamment les applications P2P, les jeux en réseau et autres).

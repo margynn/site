@@ -224,10 +224,6 @@ func getAddress(b []byte) (netip.AddrPort, error) {
 
 {{< /collapse >}}
 
-{{< alert type="warning" >}}
-This demo deliberately simplifies STUN: the `bindingRequest`'s Transaction ID is left at zero, when it should be drawn randomly and then checked in the response (to reject responses that don't match the request). Errors from `Dial`, `Write`, and `Read` are also ignored, which is only acceptable for a demonstration.
-{{< /alert >}}
-
 Running this several times in a row, we can see that the IP stays fixed but the port changes:
 
 ```sh
@@ -424,7 +420,6 @@ It's certainly less critical than opening every port on your router and exposing
 NATs actually have two independent decisions to make: which public port to assign to an outgoing flow, and which incoming packets to accept on that port. There are several NAT behaviors, among them:
 
 - **Full-cone:** the assigned public port doesn't depend on the destination, and once the mapping is created, any peer can send it UDP packets to the public address and port discovered via STUN. The punching described above then works.
-- **(Port-)restricted cone:** the assigned public port also doesn't depend on the destination, but the NAT does more than just translate: it also filters incoming packets and only accepts those coming from an IP (and, for port-restricted, a port) already contacted from this mapping. The punching still works, provided each peer has first sent an outgoing packet to the other — that's the role of the repeated hole-punching packets.
 - **Symmetric:** this time the assigned public port does depend on the destination. The port discovered by the STUN server may be different from the one used to reach the other peer. Sharing that port with them isn't enough to punch through the NAT.
 
 Then, the firewall can still add its own rules and block incoming UDP packets, possibly depending on their origin. On home networks, NAT punching is generally feasible (notably to enable P2P applications, online games, and others).
